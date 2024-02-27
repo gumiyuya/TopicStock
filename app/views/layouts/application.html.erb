@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>TopicStock</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+  
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: darkorange;
+      color: white;
+      padding: 10px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-title {
+      font-size: 24px;
+    }
+    .header-links {
+      font-size: 16px;
+    }
+    .header-links span:not(:first-child) {
+      margin-left: 20px;
+    }
+    </style>
+    </head>
+
+    <body>
+
+    <div class="header">
+      <div class="header-title">トピックストック</div>
+      <div class="header-links">
+        <span>人気</span>
+        <span>ログイン</span>
+      </div>
+    </div>
+
+    <%= yield %>
+  </body>
+</html>

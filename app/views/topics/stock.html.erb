@@ -1,0 +1,70 @@
+<div style="height: 1000px; padding-top: 60px;">
+
+  <style>
+    .container {
+      margin-top: 50px;
+      text-align: center;
+      color: white;
+    }
+    .big-box {
+      width: 600px;
+      height: 200px;
+      margin: 0 auto 20px auto;
+      display: flex; 
+      align-items: center; /* 子要素pを上下中央に並べる */
+      justify-content: center; /* 子要素pを左右中央に並べる */
+      background-color: darkorange;
+      border-radius: 10px;
+    }
+    .big-box p {
+      font-size: 48px;
+      word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
+    }
+    .small-boxes {
+      width: 610px;
+      margin: 0 auto;
+    }
+    .small-box {
+      width: calc((600px - 20px) / 3); /* small-box * 3 + margin = big-box */
+      height: 100px;
+      margin: 5px 5px;
+      float: left;
+      display: flex; 
+      align-items: center; /* 子要素pを上下中央に並べる */
+      justify-content: center; /* 子要素pを左右中央に並べる */
+      background-color: #ffb52a;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      white-space: pre-wrap; /* small-boxがbig-boxの幅に収まるように折り返す */
+      overflow: hidden; /* 枠外のテキストpを切り捨てる（平仮名40字まで） */
+    }
+    .small-box:active {
+      transform: translateY(2px);
+    }
+    .small-box p {
+      font-size: 18px;
+      word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
+    }
+  </style>
+
+  <div class="container">
+    <div class="big-box">
+      <p>天気の話</p>
+    </div>
+    <div class="small-boxes">
+      <div class="small-box">
+        <p>季節の話</p>
+      </div>
+      <div class="small-box">
+        <p>通勤・通学方法</p>
+      </div>
+      <div class="small-box">
+        <p>雨の話</p>
+      </div>
+      <div class="small-box">
+        <p>あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</p>
+      </div>
+    </div>
+  </div>
+</div>
