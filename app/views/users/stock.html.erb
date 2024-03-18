@@ -2,7 +2,6 @@
   .container {
     margin-top: 110px;
     text-align: center;
-    color: white;
   }
   .big-box {
     width: 600px;
@@ -17,6 +16,7 @@
   }
   .big-box p {
     font-size: 44px;
+    color: white;
     word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
   }
   .small-boxes {
@@ -43,26 +43,39 @@
   }
   .small-box p {
     font-size: 18px;
+    color: white;
     word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
+  }
+  .edit-link {
+    position: absolute;
+    top: 56px;
+    right: 10px;
+    font-size: 18px;
+    color: darkorange;
+    text-decoration: underline;
   }
 </style>
 
 <div class="container">
+
+  <%= link_to("編集", "/users/#{@random_topic.id}/edit", class: "edit-link") %>
+
   <div class="big-box">
-    <p>天気の話</p>
+    <p><%= @random_topic.content %></p>
   </div>
+
   <div class="small-boxes">
-    <div class="small-box">
-      <p>季節の話</p>
-    </div>
-    <div class="small-box">
-      <p>通勤・通学方法</p>
-    </div>
-    <div class="small-box">
-      <p>雨の話</p>
-    </div>
-    <div class="small-box">
-      <p>あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</p>
-    </div>
+    <!-- 1.ランダムで表示される話題に紐づく中間データを全て取り出す -->
+    <% @connections.each do |connection| %>
+      <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
+      <% similar_topics = SimilarTopic.where(id: connection.similar_topic_id) %>
+      <div class="small-box">
+        <!-- 3.代入した類題を全て取り出す -->
+        <% similar_topics.each do |similar_topic| %>
+          <!-- 4.取り出した類題のcontentのみを表示する -->
+          <p><%= similar_topic.content %></p>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

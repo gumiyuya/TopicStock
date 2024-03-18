@@ -1,0 +1,109 @@
+<style>
+  .organized-container {
+    width: 75%;
+    margin: 80px auto 0 auto;
+    text-align: center;
+  }
+  .container {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  h2 {
+    margin-top: 50px;
+    text-align: ceter;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  form label, form input {
+    margin-bottom: 10px;
+  }
+  form button {
+    color: white; 
+    background-color: darkorange;
+    border: 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .font-error {
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: 30px auto 0 auto;
+    font-size: 40;
+    color:red;
+  }
+</style>
+
+<div class="organized-container">
+
+  <% if @login_error_message %>
+    <p class="font-error">
+      <%= @login_error_message %>
+    </p>
+  <% end %>
+
+  <div class="login-container">
+    <h2>ログイン</h2>
+    <!-- ページ遷移によるエラーメッセージ表示のためturbo無効化 -->
+    <%= form_tag("/login", local: true, data: { turbo: false }) do %>
+      <label for="username">ユーザー名:</label>
+      <input type="text"     id="username" name="username" required value="<%= @login_username %>">
+      <label for="password">パスワード:</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">ログイン</button>
+    <% end %>
+  </div>
+
+  <% if @signup_error_message %>
+    <p class="font-error"><%= @signup_error_message %></p>
+  <% end %>
+
+  <div class="signup-container" id="signup-form">
+    <h2>新規登録はこちら</h2>
+    <!-- ページ遷移によるエラーメッセージ表示のためturbo無効化 -->
+    <%= form_tag("/signup", local: true, data: { turbo: false }) do %> 
+      <label for="newname">新しいユーザー名:</label>
+      <!-- name="new-username"のようなスネークの命名にするとログインの入力フォームにも影響してエラーとなる -->
+      <input type="text"     id="newname" name="newname" required
+      placeholder="12文字以下" value="<%= @signup_username %>">
+      <label for="newpass">新しいパスワード:</label>
+      <input type="password" id="newpass" name="newpass" required
+      placeholder="半角英数4～12文字以内">
+      <button type="submit">新規登録</button>
+    <% end %>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // フォームの要素を取得
+      var form = document.getElementById("signup-form");
+
+      // フォームが送信されるときの処理
+      form.addEventListener("submit", function(event) {
+        // 入力値を取得
+        var usernameInput = document.getElementById("newname");
+        var passwordInput = document.getElementById("newpass");
+        var username = usernameInput.value;
+        var password = passwordInput.value;
+
+        // バリデーションを実行
+        if (username.length > 12) {
+            alert("ユーザー名は12文字以下で入力してください");
+            event.preventDefault(); // フォームの送信をキャンセル
+            return;
+        }
+
+        if (!/^[a-zA-Z0-9]+$/.test(password) || password.length < 4 || password.length > 12) {
+            alert("パスワードは半角英数4文字以上12文字以下で入力してください");
+            event.preventDefault(); // フォームの送信をキャンセル
+            return;
+        }
+      });
+    });
+  </script>
+
+</div>

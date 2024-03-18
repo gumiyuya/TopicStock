@@ -1,0 +1,113 @@
+<style>
+  .font-error {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: red;
+  }
+  .container {
+    margin-top: 110px;
+    text-align: center;
+  }
+  .big-box {
+    width: 600px;
+    height: 200px;
+    margin: 0 auto 20px auto;
+    display: flex; 
+    align-items: center; /* 子要素を上下中央に並べる */
+    justify-content: center; /* 子要素を左右中央に並べる */
+    font-size: 44px;
+    background-color: darkorange;
+    border-radius: 10px;
+    overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
+  }
+  .big-text {
+    font-size: 44px;
+    color: white;
+    background-color: darkorange;
+    resize: none;
+    word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
+  }
+  .small-boxes {
+    width: 610px;
+    margin: 0 auto;
+  }
+  .small-box {
+    width: calc((600px - 20px) / 3); /* small-box3つとその間の長さの合計をbig-boxの長さと同じにする */
+    height: 120px;
+    margin: 5px 5px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 子要素を上下中央に並べる */
+    justify-content: center; /* 子要素を左右中央に並べる */
+    background-color: #ffb52a;
+    border-radius: 10px;
+    white-space: pre-wrap; /* small-boxがbig-boxの幅に収まるように折り返す */
+    overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
+  }
+  .small-text {
+    font-size: 17px;
+    color: white;
+    background-color: #ffb52a;
+    resize: none;
+    word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
+  }
+  .buttons {
+    width: 100%;
+    display: flex; /* 子要素のボタンを横並びにする */
+    justify-content: space-evenly; /* ボタンの間隔を空ける */
+  }
+</style>
+
+<% if @existing_error_message %>
+  <p class="font-error"><%= @existing_error_message %></p>
+<% end %>
+
+<div class="container">
+
+  <div class="big-box">
+    <%= form_tag("/users/#{@topic.id}/update", local: true, data: { turbo: false }) do %>
+      <textarea class="big-text" name="topic" required
+      rows="4" cols="20" maxlength="40"><%= @topic.content %></textarea>
+      <button type="submit">編集</button>
+    <% end %>
+  </div>
+
+  <div class="small-boxes">
+    <!-- 1.ランダムで表示された、ある話題に紐づく中間データを全て取り出す -->
+    <% @connections.each do |connection| %>
+      <%= form_tag("/users/#{connection.similar_topic_id}/s_update", {local: true,
+      method: :post, data: { turbo: false }}) do %>
+        <div class="small-box">
+          <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
+          <% similar_topics = SimilarTopic.where(id: connection.similar_topic_id) %>
+          <!-- 3.代入した類題を全て取り出す -->
+          <% similar_topics.each do |similar_topic| %>
+            <!-- 4.取り出した類題のcontentのみをテキストエリア内に表示する -->
+            <textarea class="small-text" name="update_similar_topic" required
+            rows="4" cols="20" maxlength="40"><%= similar_topic.content %></textarea>
+            <div class="buttons">
+              <button type="submit">編集</button>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <!-- 類題新規登録フォーム（類題が6つ未満の場合のみ新規登録可） -->
+    <% if @connections.size < 6 %>
+      <%= form_tag("/users/#{@topic.id}/s_create", local: true, data: { turbo: false }) do %>
+        <div class="small-box">
+          <textarea class="small-text" name="create_similar_topic" required
+          rows="4" cols="20" maxlength="40"></textarea>
+          <button type="submit">保存</button>
+        </div>
+      <% end %>
+    <% end %>
+
+  </div>
+
+</div>

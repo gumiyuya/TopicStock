@@ -2,6 +2,10 @@ source "https://rubygems.org"
 
 ruby "3.2.3"
 
+gem 'rails-i18n'
+
+gem 'rails_db', '~> 2.4', '>= 2.4.2'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3"
 
