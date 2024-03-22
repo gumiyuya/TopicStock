@@ -12,13 +12,16 @@ Rails.application.routes.draw do
   # ユーザーのホームページ idはユーザーのid
   get  "users/:id" => "users#home"
   get  "users/:id/stock" => "users#stock"
+  get  "users/:id/new" => "users#new"
+  post "users/:id/create" => "users#create"
   # 編集ページ idはトピックのid
   get  "users/:id/edit" => "users#edit"
   post "users/:id/update" =>"users#update"
-  delete "users/:id/destroy" =>"users#destroy"
   post "users/:id/s_update" =>"users#s_update"
-  delete "users/:id/s_destroy" =>"users#s_destroy"
   post "users/:id/s_create" =>"users#s_create"
+  get  "users/:id/delete" => "users#delete"
+  post "users/:id/destroy" =>"users#destroy"
+  post "users/:id/s_destroy" =>"users#s_destroy"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

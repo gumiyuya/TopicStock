@@ -46,10 +46,17 @@
     color: white;
     word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
   }
-  .edit-link {
+  .edit {
     position: absolute;
     top: 56px;
     right: 10px;
+  }
+  .edit li {
+    padding-left: 20px;
+    float: left;
+    list-style-type: none;
+  }
+  .edit-link {
     font-size: 18px;
     color: darkorange;
     text-decoration: underline;
@@ -58,7 +65,10 @@
 
 <div class="container">
 
-  <%= link_to("編集", "/users/#{@random_topic.id}/edit", class: "edit-link") %>
+  <div class="edit">
+    <li><%= link_to("編集", "/users/#{@random_topic.id}/edit", class: "edit-link") %></li>
+    <li><%= link_to("削除", "/users/#{@random_topic.id}/delete", class: "edit-link") %></li>
+  </div>
 
   <div class="big-box">
     <p><%= @random_topic.content %></p>

@@ -44,17 +44,17 @@
 <div class="container">
   <div class="big-box">
     <div class="small-box">
-      <p><%= @user.name %></p>
+      <p><%= @current_user.name %></p>
     </div>
     <div class="small-box">
       <!-- 検索フォームのHTMLを記述 -->
-      <i class="fas fa-search"></i> <!-- 検索フォームのアイコン -->
+      <i class="fas fa-search"></i>
       <input type="text" name="search" placeholder="話題を検索">
     </div>
     <div class="small-box">
-        <i class="fas fa-edit"></i> <!-- 編集アイコン -->
-        <span>編集・削除</span>
+      <i class="fas fa-plus"></i>
+      <span><%= link_to("新規ストック", "/users/#{@current_user.id}/new") %></span>
     </div>
   </div>
-  <%= link_to("スタート", "/users/#{@user.id}/stock", class: "start-btn") %>
+  <%= link_to("スタート", "/users/#{@current_user.id}/stock", class: "start-btn") %>
 </div>
