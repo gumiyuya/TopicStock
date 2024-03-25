@@ -21,7 +21,7 @@
   form label, form input {
     margin-bottom: 10px;
   }
-  form button {
+  form .button {
     color: white; 
     background-color: darkorange;
     border: 1px solid;
@@ -48,13 +48,12 @@
 
   <div class="login-container">
     <h2>ログイン</h2>
-    <!-- ページ遷移によるエラーメッセージ表示のためturbo無効化 -->
-    <%= form_tag("/login", local: true, data: { turbo: false }) do %>
-      <label for="username">ユーザー名:</label>
-      <input type="text"     id="username" name="username" required value="<%= @login_username %>">
-      <label for="password">パスワード:</label>
-      <input type="password" id="password" name="password" required>
-      <button type="submit">ログイン</button>
+    <%= form_with(url: "/login", local: true) do |form| %>
+      <%= form.label :username, "ユーザー名:" %>
+      <%= form.text_field :username, id: "username", required: true, value: @login_username %>
+      <%= form.label :password, "パスワード:" %>
+      <%= form.password_field :password, id: "password", required: true %>
+      <%= form.submit class: "button", value: "ログイン" %>
     <% end %>
   </div>
 
@@ -64,46 +63,16 @@
 
   <div class="signup-container" id="signup-form">
     <h2>新規登録はこちら</h2>
-    <!-- ページ遷移によるエラーメッセージ表示のためturbo無効化 -->
-    <%= form_tag("/signup", local: true, data: { turbo: false }) do %> 
-      <label for="newname">新しいユーザー名:</label>
+    <%= form_with(url: "/signup", local: true) do |form| %> 
+      <%= form.label :newname, "新しいユーザー名:" %>
       <!-- name="new-username"のようなスネークの命名にするとログインの入力フォームにも影響してエラーとなる -->
-      <input type="text"     id="newname" name="newname" required
-      placeholder="12文字以下" value="<%= @signup_username %>">
-      <label for="newpass">新しいパスワード:</label>
-      <input type="password" id="newpass" name="newpass" required
-      placeholder="半角英数4～12文字以内">
-      <button type="submit">新規登録</button>
+      <%= form.text_field :newname, id: "newname", required: true,
+      placeholder: "12文字以下", value: @signup_username %>
+      <%= form.label :newpass, "新しいパスワード:" %>
+      <%= form.password_field :newpass, id: "newpass", required: true,
+      placeholder: "半角英数4～12文字以内" %>
+      <%= form.submit class: "button", value: "新規登録" %>
     <% end %>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // フォームの要素を取得
-      var form = document.getElementById("signup-form");
-
-      // フォームが送信されるときの処理
-      form.addEventListener("submit", function(event) {
-        // 入力値を取得
-        var usernameInput = document.getElementById("newname");
-        var passwordInput = document.getElementById("newpass");
-        var username = usernameInput.value;
-        var password = passwordInput.value;
-
-        // バリデーションを実行
-        if (username.length > 12) {
-            alert("ユーザー名は12文字以下で入力してください");
-            event.preventDefault(); // フォームの送信をキャンセル
-            return;
-        }
-
-        if (!/^[a-zA-Z0-9]+$/.test(password) || password.length < 4 || password.length > 12) {
-            alert("パスワードは半角英数4文字以上12文字以下で入力してください");
-            event.preventDefault(); // フォームの送信をキャンセル
-            return;
-        }
-      });
-    });
-  </script>
 
 </div>

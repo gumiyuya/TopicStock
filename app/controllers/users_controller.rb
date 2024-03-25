@@ -7,10 +7,7 @@ class UsersController < ApplicationController
 
   # ログイン成功時のみユーザーページへ
   def login
-    @user = User.find_by(
-      name:     params[:username],
-      password: params[:password]
-    )
+    @user = User.find_by(name: params[:username], password: params[:password])
     if @user
       session[:user_id] = @user.id
       redirect_to("/users/#{@user.id}")
@@ -23,16 +20,14 @@ class UsersController < ApplicationController
 
   # 新規登録成功時のみユーザーページへ
   def signup
-    @user = User.new(
-    name:     params[:newname],
-    password: params[:newpass]
-    )
+    @user = User.new(name: params[:newname], password: params[:newpass])
     if @user.save
       redirect_to("/users/#{@user.id}")
-    else
-      @signup_error_message = "ユーザー名が既に存在します"
-      @signup_username = params[:newname]
-      render("users/login_form")
+    # javascriptのアラート追加により以下不要
+    # else
+      # @signup_error_message = "ユーザー名が既に存在します"
+      # @signup_username = params[:newname]
+      # render("users/login_form")
     end
   end
 
@@ -44,6 +39,7 @@ class UsersController < ApplicationController
 
   # ユーザーのホームページ
   def home
+    @topic_count = Topic.where(user_id: @current_user.id).count
   end
 
   # ユーザーのストックページ
@@ -170,14 +166,7 @@ class UsersController < ApplicationController
   def destroy
     topic = Topic.find_by(id: params[:id]).destroy
     similar_topic = SimilarTopic.find_by(id: params[:id]).destroy
-    # 紐づきがあれば全ての紐づきを削除
-    if connection1 = Connection.where(topic_id: params[:id])
-      connection1.destroy_all
-      connection2 = Connection.where(similar_topic_id: params[:id]).destroy_all
-      redirect_to("/users/#{@current_user.id}/stock")
-    else # なければそのままページ遷移
-      redirect_to("/users/#{@current_user.id}/stock")
-    end
+    redirect_to("/users/#{@current_user.id}/stock")
   end
 
   # 類題との紐づきの削除

@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   validates :name, {
-    presence: true,
-    uniqueness: true,
+    presence: true, uniqueness: true,
     length: { maximum: 12 }
   }
   validates :password, {

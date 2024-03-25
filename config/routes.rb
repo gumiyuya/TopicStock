@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get  "TopicStock" => "home#top"
   # メインページ
   get  "topics/stock" => "topics#stock"
+  # 検索フォーム
+  get  "search" => "searches#search"
 
   # ログインページとログアウト処理
   get  "login_form" => "users#login_form"

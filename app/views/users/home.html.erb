@@ -14,17 +14,23 @@
     background-color: #ff7799;
     border-radius: 20px;
   }
+  p {
+    padding: 10px;
+    margin-right: 30px;
+  }
   .small-box {
+    width: 240px;
+    align-items: left;
+  }
+  .content {
     width: 100%;
     padding: 10px;
+    text-align: left;
     font-size: 16px;
-    word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
   }
-  .small-box i {
+  i {
     margin-right: 10px;
-    display: inline; /* アイコンと文字の間の余白を設定 */
-    justify-content: left; /* 中央寄せ */
-    text-align: left; /* テキストを左寄せ */
+    display: inline;
   }
   .start-btn {
     width: 320px;
@@ -36,24 +42,27 @@
     font-size: 32px;
     background-color: darkorange;
     border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 0 10px #0000001a
   }
   </style>
 
 <div class="container">
   <div class="big-box">
+    
+    <p><i class="fas fa-user"></i><%= @current_user.name %></p>
     <div class="small-box">
-      <p><%= @current_user.name %></p>
-    </div>
-    <div class="small-box">
-      <!-- 検索フォームのHTMLを記述 -->
-      <i class="fas fa-search"></i>
-      <input type="text" name="search" placeholder="話題を検索">
-    </div>
-    <div class="small-box">
-      <i class="fas fa-plus"></i>
-      <span><%= link_to("新規ストック", "/users/#{@current_user.id}/new") %></span>
+      <div class="content">
+        <i class="fas fa-star"></i>
+        <span>ストックしたトピック <%= @topic_count %>個</span>
+      </div>
+      <div class="content">
+        <!-- 検索フォームのHTMLを記述 -->
+        <i class="fas fa-search"></i>
+        <input type="text" name="search" placeholder="トピックを検索">
+      </div>
+      <div class="content">
+        <i class="fas fa-plus"></i>
+        <span><%= link_to("新規ストック", "/users/#{@current_user.id}/new") %></span>
+      </div>
     </div>
   </div>
   <%= link_to("スタート", "/users/#{@current_user.id}/stock", class: "start-btn") %>

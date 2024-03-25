@@ -64,7 +64,7 @@
 <div class="container">
 
   <div class="big-box">
-    <%= form_with url: "/users/#{@topic.id}/update", data: { turbo: false } do |form| %>
+    <%= form_with(url: "/users/#{@topic.id}/update", data: { turbo: false }) do |form| %>
       <%= form.text_area :content, class: "big-text", required: true,
       size: "20x4", maxlength: 40, value: @topic.content %>
       <%= form.submit "編集" %>
@@ -78,7 +78,7 @@
       <% similar_topics = SimilarTopic.where(id: connection.similar_topic_id) %>
       <!-- 3.代入した類題を全て取り出す -->
       <% similar_topics.each do |similar_topic| %>
-        <%= form_with url: "/users/#{@topic.id}/s_update", data: { turbo: false } do |form| %>
+        <%= form_with(url: "/users/#{@topic.id}/s_update", data: { turbo: false }) do |form| %>
           <%= form.hidden_field :similar_topic_id, value: similar_topic.id %>
           <div class="small-box">
             <!-- 4.取り出した類題のcontentのみをテキストエリア内に表示する -->
@@ -92,7 +92,7 @@
 
     <!-- 類題新規登録フォーム（類題が6つ未満の場合のみ新規登録可） -->
     <% if @connections.size < 6 %>
-      <%= form_with url: "/users/#{@topic.id}/s_create", data: { turbo: false } do |form| %>
+      <%= form_with(url: "/users/#{@topic.id}/s_create", data: { turbo: false }) do |form| %>
         <div class="small-box">
           <%= form.text_area :content, class: "small-text", required: true,
           size: "20x4", maxlength: 40 %>
