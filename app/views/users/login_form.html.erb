@@ -48,7 +48,7 @@
 
   <div class="login-container">
     <h2>ログイン</h2>
-    <%= form_with(url: "/login", local: true) do |form| %>
+    <%= form_with(url: "/login", local: true, data: { turbo: false }) do |form| %>
       <%= form.label :username, "ユーザー名:" %>
       <%= form.text_field :username, id: "username", required: true, value: @login_username %>
       <%= form.label :password, "パスワード:" %>

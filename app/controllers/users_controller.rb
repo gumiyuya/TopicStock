@@ -23,11 +23,10 @@ class UsersController < ApplicationController
     @user = User.new(name: params[:newname], password: params[:newpass])
     if @user.save
       redirect_to("/users/#{@user.id}")
-    # javascriptのアラート追加により以下不要
-    # else
-      # @signup_error_message = "ユーザー名が既に存在します"
-      # @signup_username = params[:newname]
-      # render("users/login_form")
+    else
+      @signup_error_message = "ユーザー名が既に存在します"
+      @signup_username = params[:newname]
+      render("users/login_form")
     end
   end
 
@@ -76,16 +75,16 @@ class UsersController < ApplicationController
     @topic = Topic.find_by(id: params[:id])
     @connections = Connection.where(topic_id: @topic.id)
 
-    topic = Topic.find_by(id: params[:id])
-    topic.content = params[:content]
-    similar_topic = SimilarTopic.find_by(id: params[:id])
-    similar_topic.content = params[:content]
-    if topic.save && similar_topic.save
-      redirect_to("/users/#{@current_user.id}/stock")
-    else
+    if Topic.exists?(content: params[:content], user_id: @current_user.id)
       # topic,similar_topicの保存に失敗した場合の処理
       @existing_error_message = "そのトピックは既にストックしています"
       render("users/edit")
+    else
+      topic = Topic.find_by(id: params[:id])
+      similar_topic = SimilarTopic.find_by(id: params[:id])
+      topic.update(content: params[:content])
+      similar_topic.update(content: params[:content])
+      redirect_to("/users/#{@current_user.id}/stock")
     end
   end
 
@@ -96,22 +95,16 @@ class UsersController < ApplicationController
     @connections = Connection.where(topic_id: @topic.id)
     
     # テキストエリアを全く変えずに編集ボタンを押す、
-    # 既にある類題を登録しようとする、などはエラーとする
+    # 登録済の類題を編集によって紐づけようとする、などはエラーとする
     if SimilarTopic.exists?(content: params[:content], user_id: @current_user.id)
-      @existing_error_message = "そのトピックは既にストックしています"
+      @existing_error_message = "登録済のトピックを紐づけるにはストックしてください"
       render("users/edit")
-    else
+    else # 編集後の内容が未登録なら編集を完了させる
       topic = Topic.find_by(id: params[:similar_topic_id])
-      topic.content = params[:content]
       similar_topic = SimilarTopic.find_by(id: params[:similar_topic_id])
-      similar_topic.content = params[:content]
-      if topic.save && similar_topic.save
-        redirect_to("/users/#{@current_user.id}/stock")
-      else
-        # topic,similar_topicの保存に失敗した場合の処理
-        @existing_error_message = "1つのトピックに紐づけられるトピックは6つまでです"
-        render("users/edit")
-      end
+      topic.update(content: params[:content])
+      similar_topic.update(content: params[:content])
+      redirect_to("/users/#{@current_user.id}/stock")
     end
   end
 
@@ -126,26 +119,24 @@ class UsersController < ApplicationController
         content: params[:content],
         user_id: @current_user.id
       )
-      # かつ既に紐づいているならエラー
+      # 既に紐づいているならエラー
       if Connection.exists?(topic_id: params[:id], similar_topic_id: existing_similar_topic.id)
-        @existing_error_message = "そのトピックは既にストックしています"
+        @existing_error_message = "既に紐づいたトピックです"
         render("users/edit")
-      else # 紐づいていなければ紐づけを行う
-        connect_existing_topic1 = Connection.new(
+        # 紐づきが既に6つ以上あるならエラー
+      elsif Connection.where(topic_id: existing_similar_topic.id).size > 5
+        @existing_error_message = "1つのトピックに紐づけられるトピックは6つまでです"
+        render("users/edit")
+      else # 紐づいていなくてかつ紐づきが5つ以下なら紐づけを行う
+        connect_existing_topic1 = Connection.create(
           topic_id:         params[:id],
           similar_topic_id: existing_similar_topic.id
         )
-        connect_existing_topic2 = Connection.new(
+        connect_existing_topic2 = Connection.create(
           topic_id:         existing_similar_topic.id,
           similar_topic_id: params[:id]
         )
-        if connect_existing_topic1.save && connect_existing_topic2.save
-          redirect_to("/users/#{@current_user.id}/stock")
-        else
-          # 紐づけに失敗した場合の処理
-          @existing_error_message = "1つのトピックに紐づけられるトピックは6つまでです"
-          render("users/edit")
-        end
+        redirect_to("/users/#{@current_user.id}/stock")
       end
     else # 新規登録した類題がまだDBに存在しないならDBへの追加も行う
       topic = Topic.create(content: params[:content], user_id: @current_user.id)
