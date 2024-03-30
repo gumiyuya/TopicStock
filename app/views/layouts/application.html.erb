@@ -13,54 +13,31 @@
   </head>
 
   <body>
-  
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-      }
-      .header {
-        width: 100%;
-        height: 50px;
-        padding: 10px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: white;
-        background-color: darkorange;
-      }
-      .header-title {
-        font-size: 24px;
-      }
-      .header-links {
-        font-size: 16px;
-      }
-      .header-links span:not(:first-child) {
-        margin-left: 20px;
-      }
-      a {
-        text-decoration: none;
-        color: white;
-      }
-    </style>
 
-    <div class="header">
+    <div class="header" data-turbo="false">
       <div class="header-title">
         <% if @current_user %>
-          <span><%= link_to("トピックストック", "/users/#{@current_user.id}") %></span>
+          <span>
+            <%= link_to("トピックストック", "/users/#{@current_user.id}") %>
+          </span>
         <% else %>
-          <span><%= link_to("トピックストック", "/TopicStock") %></span>
+          <span>
+            <%= link_to("トピックストック", "/TopicStock") %>
+          </span>
         <% end %>
       </div>
       <div class="header-links">
         <% if @current_user %>
-          <span><%= link_to(@current_user.name, "/users/#{@current_user.id}") %></span>
-          <span><%= link_to("ログアウト", "/logout", data: {turbo_method: "post"}) %></span>
+          <span>
+            <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
+          </span>
+          <span data-turbo="true">
+            <%= link_to("ログアウト", "/logout", data: {turbo_method: "post"}) %>
+          </span>
         <% else %>
-          <span><%= link_to("ログイン", "/login_form") %></span>
+          <span>
+            <%= link_to("ログイン", "/login_form") %>
+          </span>
         <% end %>
       </div>
     </div>

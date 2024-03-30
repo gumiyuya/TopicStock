@@ -1,77 +1,18 @@
-<style>
-  .font-error {
-    position: absolute;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 20px;
-    color: red;
-  }
-  .container {
-    margin-top: 110px;
-    text-align: center;
-  }
-  .big-box {
-    width: 600px;
-    height: 200px;
-    margin: 0 auto 20px auto;
-    display: flex; 
-    align-items: flex-end; /* 子要素を下に揃える */
-    justify-content: space-evenly; /* 子要素を左右中央に並べる */
-    font-size: 44px;
-    background-color: darkorange;
-    border-radius: 10px;
-    overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
-  }
-  .big-text {
-    font-size: 44px;
-    color: white;
-    background-color: darkorange;
-    resize: none;
-    word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
-  }
-  .small-boxes {
-    width: 610px;
-    margin: 0 auto;
-  }
-  .small-box {
-    width: calc((600px - 20px) / 3); /* small-box3つとその間の長さの合計をbig-boxの長さと同じにする */
-    height: 120px;
-    margin: 5px 5px;
-    float: left;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* 子要素を上下中央に並べる */
-    justify-content: center; /* 子要素を左右中央に並べる */
-    background-color: #ffb52a;
-    border-radius: 10px;
-    white-space: pre-wrap; /* small-boxがbig-boxの幅に収まるように折り返す */
-    overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
-  }
-  .small-text {
-    font-size: 17px;
-    color: white;
-    background-color: #ffb52a;
-    resize: none;
-    word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
-  }
-</style>
-
 <% if @existing_error_message %>
-  <p class="font-error"><%= @existing_error_message %></p>
+  <p class="users-delete-font-error"><%= @existing_error_message %></p>
 <% end %>
 
-<div class="container">
+<div class="users-delete-container">
 
-  <div class="big-box">
+  <div class="users-delete-big-box">
     <%= form_with(url: "/users/#{@topic.id}/destroy", local: true) do |form| %>
-      <%= form.text_area :content, class: "big-text", required: true,
+      <%= form.text_area :content, class: "users-delete-big-text", required: true,
       size: "20x4", maxlength: 40, value: @topic.content %>
       <%= form.submit "削除" %>
     <% end %>
   </div>
 
-  <div class="small-boxes">
+  <div class="users-delete-small-boxes">
     <!-- 1.ランダムで表示された、ある話題に紐づく中間データを全て取り出す -->
     <% @connections.each do |connection| %>
       <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
@@ -80,9 +21,9 @@
       <% similar_topics.each do |similar_topic| %>
         <%= form_with(url: "/users/#{@topic.id}/s_destroy", local: true) do |form| %>
           <%= form.hidden_field :similar_topic_id, value: similar_topic.id %>
-          <div class="small-box">
+          <div class="users-delete-small-box">
             <!-- 4.取り出した類題のcontentのみをテキストエリア内に表示する -->
-            <%= form.text_area :content, class: "small-text", required: true,
+            <%= form.text_area :content, class: "users-delete-small-text", required: true,
             size: "20x4", maxlength: 40, value: similar_topic.content %>
             <%= form.submit "削除" %>
           </div>
