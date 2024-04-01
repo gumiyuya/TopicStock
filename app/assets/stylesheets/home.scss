@@ -1,3 +1,23 @@
+@mixin home_box {
+  width: 320px;
+  padding: 20px;
+  margin: 0 auto 10px auto;
+  display: flex;
+  align-items: center;
+  background-color: #ff7799;
+  border-radius: 20px;
+}
+@mixin btn {
+  width: 320px;
+  height: 80px;
+  line-height: 80px;
+  padding: 0 20px;
+  margin: 0 auto;
+  font-size: 32px;
+  background-color: darkorange;
+  border-radius: 50px;
+}
+
 body {
   font-family: Arial, sans-serif;
 }
@@ -20,9 +40,9 @@ body {
 }
 .header-links {
   font-size: 16px;
-}
-.header-links span:not(:first-child) {
-  margin-left: 20px;
+  span:not(:first-child) {
+    margin-left: 20px;
+  }
 }
 a {
   text-decoration: none;
@@ -36,28 +56,15 @@ a {
   color: white;
 }
 .top-text-box {
-  width: 320px;
-  padding: 20px;
-  margin: 0 auto 10px auto;
-  display: flex;
-  align-items: center; /* 子要素pを上下中央に並べる */
-  background-color: #ff7799;
-  border-radius: 20px;
-}
-.top-text-box p {
-  font-size: 16px;
-  text-align: left;
-  word-wrap: break-word; /* テキストが枠内に収まるように折り返す */
+  @include home_box;
+  p {
+    font-size: 16px;
+    text-align: left;
+    word-wrap: break-word;
+  }
 }
 .top-start-btn {
-  width: 320px;
-  height: 80px;
-  line-height: 80px;
-  padding: 0 20px;
-  margin: 0 auto;
-  font-size: 32px;
-  background-color: darkorange;
-  border-radius: 50px;
+  @include btn;
   cursor: pointer;
   box-shadow: 0 0 10px #0000001a;
 }

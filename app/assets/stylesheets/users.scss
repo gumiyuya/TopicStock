@@ -1,0 +1,257 @@
+@mixin container {
+  margin-top: 110px;
+  text-align: center;
+}
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin flex_end {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+}
+@mixin color_group {
+  color: white;
+  background-color: darkorange;
+}
+@mixin big_box {
+  width: 600px;
+  height: 200px;
+  margin: 0 auto 20px auto;
+  font-size: 44px;
+  background-color: darkorange;
+  border-radius: 10px;
+  overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
+}
+@mixin big_text {
+  font-size: 44px;
+  @include color_group;
+  resize: none;
+  word-wrap: break-word;
+}
+/* small-box3つとその間の長さの合計をbig-boxの長さと同じにする */
+@mixin three_box_width {
+  width: calc((600px - 20px) / 3);
+}
+@mixin small_boxs {
+  width: 610px;
+  margin: 0 auto;
+}
+@mixin small_box {
+  @include three_box_width;
+  margin: 5px 5px;
+  float: left;
+  @include center;
+  background-color: #ffb52a;
+  border-radius: 10px;
+  white-space: pre-wrap; /* small-boxがbig-boxの幅に収まるように折り返す */
+  overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
+}
+@mixin small_text {
+  font-size: 17px;
+  color: white;
+  background-color: #ffb52a;
+  resize: none;
+  word-wrap: break-word;
+}
+@mixin font_error {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: red;
+}
+
+/*users/login_form*/
+.users-login_form-organized-section {
+  width: 75%;
+  margin: 80px auto 0 auto;
+  text-align: center;
+  h2 {
+    margin-top: 50px;
+    text-align: ceter;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    label,
+    input {
+      margin-bottom: 10px;
+    }
+    .button {
+      @include color_group;
+      border: 1px solid;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+  .font-error {
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: 30px auto 0 auto;
+    font-size: 40;
+    color: red;
+  }
+}
+
+/*users/home*/
+.users-home-container {
+  @include container;
+  color: white;
+  p {
+    padding: 10px;
+    margin-right: 30px;
+  }
+  i {
+    margin-right: 10px;
+    display: inline;
+  }
+}
+.users-home-big-box {
+  width: 320px;
+  padding: 20px;
+  margin: 0 auto 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ff7799;
+  border-radius: 20px;
+}
+.users-home-small-box {
+  width: 240px;
+  align-items: left;
+}
+.users-home-content {
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  font-size: 16px;
+}
+.users-home-start-btn {
+  width: 320px;
+  height: 80px;
+  line-height: 80px;
+  padding: 0 20px;
+  margin: 0 auto;
+  font-size: 32px;
+  background-color: darkorange;
+  border-radius: 50px;
+  display: inline-block;
+}
+
+/*users/stock*/
+.users-stock-container {
+  @include container;
+}
+.users-stock-big-box {
+  @include big_box;
+  @include center;
+  p {
+    color: white;
+    word-wrap: break-word;
+  }
+}
+.users-stock-small-boxes {
+  @include small_boxs;
+}
+.users-stock-small-box {
+  @include small_box;
+  height: 100px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  p {
+    font-size: 18px;
+    color: white;
+    word-wrap: break-word;
+  }
+  :active {
+    transform: translateY(2px);
+  }
+}
+.users-stock-edit {
+  position: absolute;
+  top: 56px;
+  right: 10px;
+  li {
+    padding-left: 20px;
+    float: left;
+    list-style-type: none;
+  }
+  a {
+    font-size: 18px;
+    color: darkorange;
+    text-decoration: underline;
+  }
+}
+
+/*users/new*/
+.users-new-font-error {
+  @include font_error;
+}
+.users-new-container {
+  @include container;
+}
+.users-new-big-box {
+  @include big_box;
+  @include flex_end;
+}
+.users-new-big-text {
+  @include big_text;
+}
+
+/*users/edit*/
+.users-edit-font-error {
+  @include font_error;
+}
+.users-edit-container {
+  @include container;
+}
+.users-edit-big-box {
+  @include big_box;
+  @include flex_end;
+}
+.users-edit-big-text {
+  @include big_text;
+}
+.users-edit-small-boxes {
+  @include small_boxs;
+}
+.users-edit-small-box {
+  @include small_box;
+  height: 120px;
+  flex-direction: column;
+}
+.users-edit-small-text {
+  @include small_text;
+}
+
+/*users/delete*/
+.users-delete-font-error {
+  @include font_error;
+}
+.users-delete-container {
+  @include container;
+}
+.users-delete-big-box {
+  @include big_box;
+  @include flex_end;
+}
+.users-delete-big-text {
+  @include big_text;
+}
+.users-delete-small-boxes {
+  @include small_boxs;
+}
+.users-delete-small-box {
+  @include small_box;
+  height: 120px;
+  flex-direction: column;
+}
+.users-delete-small-text {
+  @include small_text;
+}

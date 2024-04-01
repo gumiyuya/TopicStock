@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :get_connections_from_topics, only: [:edit, :update, :s_update, :s_create, :delete]
 
   # ログインページ
   def login_form
@@ -65,16 +66,10 @@ class UsersController < ApplicationController
 
   # ストックの編集ページ
   def edit
-    @topic = Topic.find_by(id: params[:id])
-    @connections = Connection.where(topic_id: @topic.id)
   end
 
   # 話題の編集
   def update
-    # renderのための変数
-    @topic = Topic.find_by(id: params[:id])
-    @connections = Connection.where(topic_id: @topic.id)
-
     if Topic.exists?(content: params[:content], user_id: @current_user.id)
       # topic,similar_topicの保存に失敗した場合の処理
       @existing_error_message = "そのトピックは既にストックしています"
@@ -90,10 +85,6 @@ class UsersController < ApplicationController
 
   # 類題の編集
   def s_update
-    # renderのための変数
-    @topic = Topic.find_by(id: params[:id])
-    @connections = Connection.where(topic_id: @topic.id)
-    
     # テキストエリアを全く変えずに編集ボタンを押す、
     # 登録済の類題を編集によって紐づけようとする、などはエラーとする
     if SimilarTopic.exists?(content: params[:content], user_id: @current_user.id)
@@ -110,10 +101,6 @@ class UsersController < ApplicationController
 
   # 新規類題登録
   def s_create
-    # renderのための変数
-    @topic = Topic.find_by(id: params[:id])
-    @connections = Connection.where(topic_id: @topic.id)
-    
     # 新規登録した類題が既にDBに存在し、
     if existing_similar_topic = SimilarTopic.find_by(
         content: params[:content],
@@ -149,8 +136,6 @@ class UsersController < ApplicationController
 
   # ストックの削除ページ
   def delete
-    @topic = Topic.find_by(id: params[:id])
-    @connections = Connection.where(topic_id: @topic.id)
   end
   
   # 話題の削除
@@ -171,6 +156,11 @@ class UsersController < ApplicationController
       similar_topic_id: params[:id]
       ).destroy
     redirect_to("/users/#{@current_user.id}/stock")
+  end
+
+  def get_connections_from_topics
+    @topic = Topic.find_by(id: params[:id])
+    @connections = Connection.where(topic_id: @topic.id)
   end
 
 end
