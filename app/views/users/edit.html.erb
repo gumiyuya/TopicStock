@@ -2,10 +2,10 @@
   <p class="users-edit-font-error"><%= @existing_error_message %></p>
 <% end %>
 
-<div class="users-edit-container">
+<div class="users-edit-container" data-turbo="false">
 
   <div class="users-edit-big-box">
-    <%= form_with(url: "/users/#{@topic.id}/update", data: { turbo: false }) do |form| %>
+    <%= form_with(url: "/users/#{@topic.id}/update") do |form| %>
       <%= form.text_area :content, class: "users-edit-big-text", required: true,
       size: "20x4", maxlength: 40, value: @topic.content %>
       <%= form.submit "編集" %>
@@ -19,7 +19,7 @@
       <% similar_topics = SimilarTopic.where(id: connection.similar_topic_id) %>
       <!-- 3.代入した類題を全て取り出す -->
       <% similar_topics.each do |similar_topic| %>
-        <%= form_with(url: "/users/#{@topic.id}/s_update", data: { turbo: false }) do |form| %>
+        <%= form_with(url: "/users/#{@topic.id}/s_update") do |form| %>
           <%= form.hidden_field :similar_topic_id, value: similar_topic.id %>
           <div class="users-edit-small-box">
             <!-- 4.取り出した類題のcontentのみをテキストエリア内に表示する -->
@@ -33,7 +33,7 @@
 
     <!-- 類題新規登録フォーム（類題が6つ未満の場合のみ新規登録可） -->
     <% if @connections.size < 6 %>
-      <%= form_with(url: "/users/#{@topic.id}/s_create", data: { turbo: false }) do |form| %>
+      <%= form_with(url: "/users/#{@topic.id}/s_create") do |form| %>
         <div class="users-edit-small-box">
           <%= form.text_area :content, class: "users-edit-small-text", required: true,
           size: "20x4", maxlength: 40 %>

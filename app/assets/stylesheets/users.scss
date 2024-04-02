@@ -169,9 +169,9 @@
     color: white;
     word-wrap: break-word;
   }
-  :active {
-    transform: translateY(2px);
-  }
+}
+.users-stock-small-box :active {
+  transform: translateY(2px);
 }
 .users-stock-edit {
   position: absolute;

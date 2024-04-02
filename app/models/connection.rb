@@ -5,6 +5,7 @@ class Connection < ApplicationRecord
   belongs_to :similar_topic
 
   validate :validate_connections_count, on: :create
+  validate :validate_different_topic_and_similar_topic
 
   private
 
@@ -13,6 +14,12 @@ class Connection < ApplicationRecord
     connections_count2 = Connection.where(similar_topic_id: self.similar_topic_id).count
     if connections_count1 >= 6 || connections_count2 >= 6
       errors.add(:base, "1つのトピックに紐づけられるトピックは6つまでです")
+    end
+  end
+
+  def validate_different_topic_and_similar_topic
+    if topic_id == similar_topic_id
+      errors.add(:base, "同じ話題同士は紐づけられません")
     end
   end
 end

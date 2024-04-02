@@ -114,6 +114,10 @@ class UsersController < ApplicationController
       elsif Connection.where(topic_id: existing_similar_topic.id).size > 5
         @existing_error_message = "1つのトピックに紐づけられるトピックは6つまでです"
         render("users/edit")
+        # 同じ話題同士を紐づけようとしたらエラー
+      elsif @topic.id == existing_similar_topic.id
+        @existing_error_message = "同じ話題同士は紐づけられません"
+        render("users/edit")
       else # 紐づいていなくてかつ紐づきが5つ以下なら紐づけを行う
         connect_existing_topic1 = Connection.create(
           topic_id:         params[:id],
