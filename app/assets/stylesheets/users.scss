@@ -7,6 +7,11 @@
   align-items: center;
   justify-content: center;
 }
+@mixin center_column {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 @mixin flex_end {
   display: flex;
   align-items: flex-end;
@@ -20,27 +25,28 @@
   width: 600px;
   height: 200px;
   margin: 0 auto 20px auto;
-  font-size: 44px;
   background-color: darkorange;
   border-radius: 10px;
   overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
 }
-@mixin big_text {
-  font-size: 44px;
-  @include color_group;
-  resize: none;
+@mixin break_word($fontSize) {
+  font-size: $fontSize;
+  color: white;
   word-wrap: break-word;
 }
-/* small-box3つとその間の長さの合計をbig-boxの長さと同じにする */
-@mixin three_box_width {
-  width: calc((600px - 20px) / 3);
+@mixin big_text {
+  @include break_word(44px);
+  background-color: darkorange;
+  resize: none;
 }
 @mixin small_boxs {
   width: 610px;
   margin: 0 auto;
 }
-@mixin small_box {
-  @include three_box_width;
+@mixin small_box($height) {
+  /* small-box3つとその間の長さの合計をbig-boxの長さと同じにする */
+  width: calc((600px - 20px) / 3);
+  height: $height;
   margin: 5px 5px;
   float: left;
   @include center;
@@ -50,18 +56,17 @@
   overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
 }
 @mixin small_text {
-  font-size: 17px;
-  color: white;
+  @include break_word(17px);
   background-color: #ffb52a;
   resize: none;
-  word-wrap: break-word;
 }
-@mixin font_error {
+@mixin font_error($positionAbsoluteTop, $margin, $fontSize) {
   position: absolute;
-  top: 50px;
+  top: $positionAbsoluteTop;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 20px;
+  margin: $margin;
+  font-size: $fontSize;
   color: red;
 }
 
@@ -72,12 +77,9 @@
   text-align: center;
   h2 {
     margin-top: 50px;
-    text-align: ceter;
   }
   form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include center_column;
     label,
     input {
       margin-bottom: 10px;
@@ -90,12 +92,7 @@
     }
   }
   .font-error {
-    position: absolute;
-    right: 0;
-    left: 0;
-    margin: 30px auto 0 auto;
-    font-size: 40;
-    color: red;
+    @include font_error(none, 30px auto 0 auto, 15px);
   }
 }
 
@@ -113,12 +110,10 @@
   }
 }
 .users-home-big-box {
+  @include center_column;
   width: 320px;
   padding: 20px;
   margin: 0 auto 10px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: #ff7799;
   border-radius: 20px;
 }
@@ -142,6 +137,10 @@
   background-color: darkorange;
   border-radius: 50px;
   display: inline-block;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 /*users/stock*/
@@ -151,27 +150,25 @@
 .users-stock-big-box {
   @include big_box;
   @include center;
+  cursor: default;
   p {
-    color: white;
-    word-wrap: break-word;
+    @include break_word(44px);
   }
 }
 .users-stock-small-boxes {
   @include small_boxs;
 }
 .users-stock-small-box {
-  @include small_box;
-  height: 100px;
+  @include small_box(100px);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease;
   p {
-    font-size: 18px;
-    color: white;
-    word-wrap: break-word;
+    @include break_word(18px);
   }
-}
-.users-stock-small-box :active {
-  transform: translateY(2px);
+  &:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 157, 0, 0.936);
+  }
 }
 .users-stock-edit {
   position: absolute;
@@ -191,7 +188,7 @@
 
 /*users/new*/
 .users-new-font-error {
-  @include font_error;
+  @include font_error(50px, 0, 20px);
 }
 .users-new-container {
   @include container;
@@ -206,7 +203,7 @@
 
 /*users/edit*/
 .users-edit-font-error {
-  @include font_error;
+  @include font_error(50px, 0, 20px);
 }
 .users-edit-container {
   @include container;
@@ -222,8 +219,7 @@
   @include small_boxs;
 }
 .users-edit-small-box {
-  @include small_box;
-  height: 120px;
+  @include small_box(120px);
   flex-direction: column;
 }
 .users-edit-small-text {
@@ -232,7 +228,7 @@
 
 /*users/delete*/
 .users-delete-font-error {
-  @include font_error;
+  @include font_error(50px, 0, 20px);
 }
 .users-delete-container {
   @include container;
@@ -248,8 +244,7 @@
   @include small_boxs;
 }
 .users-delete-small-box {
-  @include small_box;
-  height: 120px;
+  @include small_box(120px);
   flex-direction: column;
 }
 .users-delete-small-text {
