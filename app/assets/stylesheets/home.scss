@@ -16,6 +16,7 @@
   font-size: 32px;
   background-color: darkorange;
   border-radius: 50px;
+  display: inline-block;
 }
 
 body {
@@ -67,6 +68,6 @@ a {
   @include btn;
   transition: transform 0.3s ease;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 }
