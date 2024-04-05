@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     else
       @login_error_message = "ユーザー名またはパスワードが間違っています"
       @login_username = params[:username]
-      render("users/login_form")
+      render("users/login_form", status: :unprocessable_entity)
     end
   end
 
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     else
       @signup_error_message = "ユーザー名が既に存在します"
       @signup_username = params[:newname]
-      render("users/login_form")
+      render("users/login_form", status: :unprocessable_entity)
     end
   end
 
@@ -46,8 +46,8 @@ class UsersController < ApplicationController
   def stock
     user = User.find_by(id: params[:id])
     topics = Topic.where(user_id: user.id)
-    @random_topic = topics[rand(topics.size)]
-    @connections = Connection.where(topic_id: @random_topic.id)
+    @main_topic = topics[rand(topics.size)]
+    @connections = Connection.where(topic_id: @main_topic.id)
   end
 
   def new
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
       redirect_to("/users/#{@topic.id}/edit")
     else
       @existing_error_message = "そのトピックは既にストックしています"
-      render("users/new")
+      render("users/new", status: :unprocessable_entity)
     end
   end
 
@@ -73,13 +73,14 @@ class UsersController < ApplicationController
     if Topic.exists?(content: params[:content], user_id: @current_user.id)
       # topic,similar_topicの保存に失敗した場合の処理
       @existing_error_message = "そのトピックは既にストックしています"
-      render("users/edit")
+      render("users/edit", status: :unprocessable_entity)
     else
-      topic = Topic.find_by(id: params[:id])
+      @main_topic = Topic.find_by(id: params[:id])
       similar_topic = SimilarTopic.find_by(id: params[:id])
-      topic.update(content: params[:content])
+      @main_topic.update(content: params[:content])
       similar_topic.update(content: params[:content])
-      redirect_to("/users/#{@current_user.id}/stock")
+      @connections = Connection.where(topic_id: @main_topic.id)
+      render("users/stock", status: :unprocessable_entity)
     end
   end
 
@@ -89,13 +90,15 @@ class UsersController < ApplicationController
     # 登録済の類題を編集によって紐づけようとする、などはエラーとする
     if SimilarTopic.exists?(content: params[:content], user_id: @current_user.id)
       @existing_error_message = "登録済のトピックを紐づけるにはストックしてください"
-      render("users/edit")
+      render("users/edit", status: :unprocessable_entity)
     else # 編集後の内容が未登録なら編集を完了させる
       topic = Topic.find_by(id: params[:similar_topic_id])
       similar_topic = SimilarTopic.find_by(id: params[:similar_topic_id])
       topic.update(content: params[:content])
       similar_topic.update(content: params[:content])
-      redirect_to("/users/#{@current_user.id}/stock")
+      @main_topic = @topic
+      @connections = Connection.where(topic_id: @main_topic.id)
+      render("users/stock", status: :unprocessable_entity)
     end
   end
 
@@ -109,15 +112,15 @@ class UsersController < ApplicationController
       # 既に紐づいているならエラー
       if Connection.exists?(topic_id: params[:id], similar_topic_id: existing_similar_topic.id)
         @existing_error_message = "既に紐づいたトピックです"
-        render("users/edit")
+        render("users/edit", status: :unprocessable_entity)
         # 紐づきが既に6つ以上あるならエラー
       elsif Connection.where(topic_id: existing_similar_topic.id).size > 5
         @existing_error_message = "1つのトピックに紐づけられるトピックは6つまでです"
-        render("users/edit")
+        render("users/edit", status: :unprocessable_entity)
         # 同じ話題同士を紐づけようとしたらエラー
       elsif @topic.id == existing_similar_topic.id
         @existing_error_message = "同じ話題同士は紐づけられません"
-        render("users/edit")
+        render("users/edit", status: :unprocessable_entity)
       else # 紐づいていなくてかつ紐づきが5つ以下なら紐づけを行う
         connect_existing_topic1 = Connection.create(
           topic_id:         params[:id],
@@ -127,14 +130,18 @@ class UsersController < ApplicationController
           topic_id:         existing_similar_topic.id,
           similar_topic_id: params[:id]
         )
-        redirect_to("/users/#{@current_user.id}/stock")
+        @main_topic = @topic
+        @connections = Connection.where(topic_id: @main_topic.id)
+        render("users/stock", status: :unprocessable_entity)
       end
     else # 新規登録した類題がまだDBに存在しないならDBへの追加も行う
       topic = Topic.create(content: params[:content], user_id: @current_user.id)
       similar_topic = SimilarTopic.create(content: params[:content], user_id: @current_user.id)
       connection1 = Connection.create(topic_id: params[:id], similar_topic_id: similar_topic.id)
       connection2 = Connection.create(topic_id: similar_topic.id, similar_topic_id: params[:id])
-      redirect_to("/users/#{@current_user.id}/stock")
+      @main_topic = @topic
+      @connections = Connection.where(topic_id: @main_topic.id)
+      render("users/stock", status: :unprocessable_entity)
     end
   end
 
@@ -154,12 +161,14 @@ class UsersController < ApplicationController
     connection1 = Connection.find_by(
       topic_id:         params[:id],
       similar_topic_id: params[:similar_topic_id]
-      ).destroy
+    ).destroy
     connection2 = Connection.find_by(
       topic_id:         params[:similar_topic_id],
       similar_topic_id: params[:id]
-      ).destroy
-    redirect_to("/users/#{@current_user.id}/stock")
+    ).destroy
+    @main_topic = Topic.find_by(id: params[:id])
+    @connections = Connection.where(topic_id: @main_topic.id)
+    render("users/stock", status: :unprocessable_entity)
   end
 
   def get_connections_from_topics
