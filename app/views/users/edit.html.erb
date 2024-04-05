@@ -2,7 +2,7 @@
   <p class="users-edit-font-error"><%= @existing_error_message %></p>
 <% end %>
 
-<div class="users-edit-container" data-turbo="false">
+<div class="users-edit-container">
 
   <div class="users-edit-big-box">
     <%= form_with(url: "/users/#{@topic.id}/update") do |form| %>

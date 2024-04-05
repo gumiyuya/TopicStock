@@ -1,18 +1,14 @@
 "use strict";
 
 document.addEventListener("turbo:load", function () {
-  // フォームの要素を取得
   const form = document.getElementById("signup-form");
 
-  // フォームが送信されるときの処理
   form.addEventListener("submit", function (event) {
-    // 入力値を取得
-    const usernameInput = document.getElementById("newname");
-    const passwordInput = document.getElementById("newpass");
+    const usernameInput = document.getElementById("newName");
+    const passwordInput = document.getElementById("newPass");
     const username = usernameInput.value;
     const password = passwordInput.value;
 
-    // バリデーションを実行
     if (username.length > 12) {
       alert("ユーザー名は12文字以下で入力してください");
       event.preventDefault(); // フォームの送信をキャンセル

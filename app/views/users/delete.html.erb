@@ -5,7 +5,10 @@
 <div class="users-delete-container">
 
   <div class="users-delete-big-box">
-    <%= form_with(url: "/users/#{@topic.id}/destroy", local: true) do |form| %>
+    <%= form_with(
+      url: "/users/#{@topic.id}/destroy", local: true,
+      data: {turbo_confirm: "他のトピックとの紐づきからも削除されます。削除してよろしいですか？"}
+      ) do |form| %>
       <%= form.text_area :content, class: "users-delete-big-text", required: true,
       size: "20x4", maxlength: 40, value: @topic.content %>
       <%= form.submit "削除" %>

@@ -1,12 +1,12 @@
 <div class="users-stock-container">
 
   <div class="users-stock-edit">
-    <li><%= link_to("編集", "/users/#{@random_topic.id}/edit", class: "edit-link") %></li>
-    <li><%= link_to("削除", "/users/#{@random_topic.id}/delete", class: "edit-link") %></li>
+    <li><%= link_to("編集", "/users/#{@main_topic.id}/edit", class: "edit-link") %></li>
+    <li><%= link_to("削除", "/users/#{@main_topic.id}/delete", class: "edit-link") %></li>
   </div>
 
   <div class="users-stock-big-box">
-    <p><%= @random_topic.content %></p>
+    <p><%= @main_topic.content %></p>
   </div>
 
   <div class="users-stock-small-boxes">
