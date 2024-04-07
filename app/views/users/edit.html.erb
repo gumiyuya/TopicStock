@@ -8,7 +8,7 @@
     <%= form_with(url: "/users/#{@topic.id}/update") do |form| %>
       <%= form.text_area :content, class: "users-edit-big-text", required: true,
       size: "20x4", maxlength: 40, value: @topic.content %>
-      <%= form.submit "編集" %>
+      <%= form.submit class: "button", value: "編集" %>
     <% end %>
   </div>
 
@@ -25,7 +25,7 @@
             <!-- 4.取り出した類題のcontentのみをテキストエリア内に表示する -->
             <%= form.text_area :content, class: "users-edit-small-text", required: true,
             size: "20x4", maxlength: 40, value: similar_topic.content %>
-            <%= form.submit "編集" %>
+            <%= form.submit class: "button", value: "編集" %>
           </div>
         <% end %>
       <% end %>
@@ -37,7 +37,7 @@
         <div class="users-edit-small-box">
           <%= form.text_area :content, class: "users-edit-small-text", required: true,
           size: "20x4", maxlength: 40 %>
-          <%= form.submit "ストック" %>
+          <%= form.submit class: "button", value: "ストック" %>
         </div>
       <% end %>
     <% end %>

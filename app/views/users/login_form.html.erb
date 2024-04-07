@@ -6,7 +6,7 @@
 
   <div class="login-section" id="login-form">
     <h2>ログイン</h2>
-    <%= form_with(url: "/login", local: true) do |form| %>
+    <%= form_with(url: "/login") do |form| %>
       <%= form.label :username, "ユーザー名:" %>
       <%= form.text_field :username, id: "loginName", required: true, value: @login_username %>
       <%= form.label :password, "パスワード:" %>
@@ -21,7 +21,7 @@
 
   <div class="signup-section" id="signup-form">
     <h2>新規登録はこちら</h2>
-    <%= form_with(url: "/signup", local: true) do |form| %> 
+    <%= form_with(url: "/signup") do |form| %> 
       <%= form.label :newname, "新しいユーザー名:" %>
       <!-- name="new-username"のようなスネークの命名にするとログインの入力フォームにも影響してエラーとなる -->
       <%= form.text_field :newname, id: "newName", required: true,

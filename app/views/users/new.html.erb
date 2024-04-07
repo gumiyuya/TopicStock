@@ -4,10 +4,10 @@
 
 <div class="users-new-container">
   <div class="users-new-big-box">
-    <%= form_with(url: "/users/#{@current_user.id}/create", data: { turbo: false }) do |form| %>
+    <%= form_with(url: "/users/#{@current_user.id}/create") do |form| %>
       <%= form.text_area :content, class: "users-new-big-text", required: true,
       size: "20x4", maxlength: 40 %>
-      <%= form.submit "ストック" %>
+      <%= form.submit class: "button", value: "ストック" %>
     <% end %>
   </div>
 </div>
