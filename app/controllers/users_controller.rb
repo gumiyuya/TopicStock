@@ -23,6 +23,7 @@ class UsersController < ApplicationController
   def signup
     @user = User.new(name: params[:newname], password: params[:newpass])
     if @user.save
+      session[:user_id] = @user.id
       redirect_to("/users/#{@user.id}")
     else
       @signup_error_message = "ユーザー名が既に存在します"
@@ -39,7 +40,7 @@ class UsersController < ApplicationController
 
   # ユーザーのホームページ
   def home
-    @topic_count = Topic.where(user_id: @current_user.id).count
+    @topic_count = Topic.where(user_id: @current_user.id).count || 0
   end
 
   # ユーザーのストックページ

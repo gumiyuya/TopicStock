@@ -2,6 +2,22 @@
   margin-top: 110px;
   text-align: center;
 }
+@mixin btn($width, $height, $lineHeight, $bgColor) {
+  width: $width;
+  height: $height;
+  line-height: $lineHeight;
+  padding: 0 20px;
+  margin: 0 auto;
+  background-color: $bgColor;
+  border-radius: 50px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+@mixin form_btn {
+  border: 1px solid;
+  border-radius: 5px;
+  cursor: pointer;
+}
 @mixin center {
   display: flex;
   align-items: center;
@@ -20,6 +36,10 @@
 @mixin color_group {
   color: white;
   background-color: darkorange;
+}
+@mixin color_group_mirror {
+  color: darkorange;
+  background-color: white;
 }
 @mixin big_box {
   width: 600px;
@@ -85,10 +105,8 @@
       margin-bottom: 10px;
     }
     .button {
+      @include form_btn;
       @include color_group;
-      border: 1px solid;
-      border-radius: 5px;
-      cursor: pointer;
     }
   }
   .font-error {
@@ -126,18 +144,13 @@
   padding: 10px;
   text-align: left;
   font-size: 16px;
+  .users-home-new-btn {
+    @include btn(100px, 40px, 40px, rgb(255, 159, 239));
+  }
 }
 .users-home-start-btn {
-  width: 320px;
-  height: 80px;
-  line-height: 80px;
-  padding: 0 20px;
-  margin: 0 auto;
+  @include btn(320px, 80px, 80px, darkorange);
   font-size: 32px;
-  background-color: darkorange;
-  border-radius: 50px;
-  display: inline-block;
-  transition: transform 0.3s ease;
   &:hover {
     transform: scale(1.1);
   }
@@ -166,7 +179,7 @@
     @include break_word(18px);
   }
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.09);
     background-color: rgb(255, 170, 34);
   }
 }
@@ -192,6 +205,10 @@
 }
 .users-new-container {
   @include container;
+  form .button {
+    @include form_btn;
+    @include color_group_mirror;
+  }
 }
 .users-new-big-box {
   @include big_box;
@@ -207,6 +224,10 @@
 }
 .users-edit-container {
   @include container;
+  form .button {
+    @include form_btn;
+    @include color_group_mirror;
+  }
 }
 .users-edit-big-box {
   @include big_box;
@@ -232,6 +253,10 @@
 }
 .users-delete-container {
   @include container;
+  form .button {
+    @include form_btn;
+    @include color_group_mirror;
+  }
 }
 .users-delete-big-box {
   @include big_box;
@@ -239,6 +264,7 @@
 }
 .users-delete-big-text {
   @include big_text;
+  cursor: default;
 }
 .users-delete-small-boxes {
   @include small_boxs;
@@ -249,4 +275,5 @@
 }
 .users-delete-small-text {
   @include small_text;
+  cursor: default;
 }
