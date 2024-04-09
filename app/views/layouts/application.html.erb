@@ -26,13 +26,9 @@
     <div class="header" data-turbo="false">
       <div class="header-title">
         <% if @current_user %>
-          <span>
-            <%= link_to("トピックストック", "/users/#{@current_user.id}") %>
-          </span>
+          <%= link_to("トピックストック", "/users/#{@current_user.id}") %>
         <% else %>
-          <span>
-            <%= link_to("トピックストック", "/TopicStock") %>
-          </span>
+          <%= link_to("トピックストック", "/TopicStock") %>
         <% end %>
       </div>
       <div class="header-links">

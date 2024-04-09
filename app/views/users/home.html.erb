@@ -4,17 +4,20 @@
     <p><i class="fas fa-user"></i><%= @current_user.name %></p>
     <div class="users-home-small-box">
       <div class="users-home-content">
-        <i class="fas fa-star"></i>
-        <span>ストックしたトピック <%= @topic_count %>個</span>
+        <div><i class="fas fa-star"></i></div>
+        <div>ストックしたトピック <%= @topic_count %>個</div>
       </div>
       <div class="users-home-content">
-        <!-- 検索フォームのHTMLを記述 -->
         <i class="fas fa-search"></i>
-        <input type="text" name="search" placeholder="トピックを検索">
+        <%= form_with(url: "/search", method: :get) do |f| %>
+          <%= f.text_field :keyword, class: "search-field", required: true,
+          placeholder: "トピックを検索" %>
+        <% end %>
       </div>
       <div class="users-home-content">
-        <i class="fas fa-plus"></i>
-        <span><%= link_to("新規ストック", "/users/#{@current_user.id}/new", class: "users-home-new-btn") %></span>
+        <div><i class="fas fa-plus"></i></div>
+        <div><%= link_to("新規ストック", "/users/#{@current_user.id}/new",
+        class: "users-home-new-btn") %></div>
       </div>
     </div>
   </div>

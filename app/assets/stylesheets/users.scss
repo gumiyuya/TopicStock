@@ -14,24 +14,17 @@
   transition: transform 0.3s ease;
 }
 @mixin form_btn {
-  border: 1px solid;
+  border: 0px solid;
   border-radius: 5px;
   cursor: pointer;
 }
-@mixin center {
+@mixin vertical_center {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 @mixin center_column {
-  display: flex;
-  align-items: center;
+  @include vertical_center;
   flex-direction: column;
-}
-@mixin flex_end {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-evenly;
 }
 @mixin color_group {
   color: white;
@@ -42,6 +35,8 @@
   background-color: white;
 }
 @mixin big_box {
+  @include vertical_center;
+  justify-content: center;
   width: 600px;
   height: 200px;
   margin: 0 auto 20px auto;
@@ -64,12 +59,13 @@
   margin: 0 auto;
 }
 @mixin small_box($height) {
+  @include center_column;
+  justify-content: center;
   /* small-box3つとその間の長さの合計をbig-boxの長さと同じにする */
   width: calc((600px - 20px) / 3);
   height: $height;
   margin: 5px 5px;
   float: left;
-  @include center;
   background-color: #ffb52a;
   border-radius: 10px;
   white-space: pre-wrap; /* small-boxがbig-boxの幅に収まるように折り返す */
@@ -136,16 +132,19 @@
   border-radius: 20px;
 }
 .users-home-small-box {
-  width: 240px;
-  align-items: left;
+  width: 260px;
 }
 .users-home-content {
+  @include vertical_center;
   width: 100%;
   padding: 10px;
-  text-align: left;
   font-size: 16px;
+  .fa-search,
+  .search-field {
+    float: left;
+  }
   .users-home-new-btn {
-    @include btn(100px, 40px, 40px, rgb(255, 159, 239));
+    @include btn(100px, 30px, 30px, rgb(255, 159, 239));
   }
 }
 .users-home-start-btn {
@@ -162,7 +161,6 @@
 }
 .users-stock-big-box {
   @include big_box;
-  @include center;
   cursor: default;
   p {
     @include break_word(44px);
@@ -183,7 +181,7 @@
     background-color: rgb(255, 170, 34);
   }
 }
-.users-stock-edit {
+.users-stock-edit-link {
   position: absolute;
   top: 56px;
   right: 10px;
@@ -212,7 +210,6 @@
 }
 .users-new-big-box {
   @include big_box;
-  @include flex_end;
 }
 .users-new-big-text {
   @include big_text;
@@ -231,7 +228,6 @@
 }
 .users-edit-big-box {
   @include big_box;
-  @include flex_end;
 }
 .users-edit-big-text {
   @include big_text;
@@ -241,7 +237,6 @@
 }
 .users-edit-small-box {
   @include small_box(120px);
-  flex-direction: column;
 }
 .users-edit-small-text {
   @include small_text;
@@ -260,7 +255,6 @@
 }
 .users-delete-big-box {
   @include big_box;
-  @include flex_end;
 }
 .users-delete-big-text {
   @include big_text;
@@ -271,7 +265,6 @@
 }
 .users-delete-small-box {
   @include small_box(120px);
-  flex-direction: column;
 }
 .users-delete-small-text {
   @include small_text;

@@ -1,0 +1,13 @@
+<% if @error_message %>
+  <p class="searchs-font-error"><%= @error_message %></p>
+<% end %>
+
+<div class="searchs-container">
+  <div class="searchs-small-boxes">
+    <% @topics.each do |topic| %>
+      <div class="searchs-small-box">
+        <p><%= topic.content %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
