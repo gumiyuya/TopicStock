@@ -1,20 +1,20 @@
 <div class="users-stock-container">
 
-  <div class="users-stock-edit-link">
+  <div class="edit-link">
     <li><%= link_to("編集", "/users/#{@main_topic.id}/edit") %></li>
     <li><%= link_to("削除", "/users/#{@main_topic.id}/delete") %></li>
   </div>
 
-  <div class="users-stock-big-box">
+  <div class="big-box">
     <p><%= @main_topic.content %></p>
   </div>
 
-  <div class="users-stock-small-boxes">
+  <div class="small-boxes">
     <!-- 1.ランダムで表示される話題に紐づく中間データを全て取り出す -->
     <% @connections.each do |connection| %>
       <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
       <% similar_topics = SimilarTopic.where(id: connection.similar_topic_id) %>
-      <div class="users-stock-small-box">
+      <div class="small-box">
         <!-- 3.代入した類題を全て取り出す -->
         <% similar_topics.each do |similar_topic| %>
           <!-- 4.取り出した類題のcontentのみを表示する -->
@@ -23,4 +23,10 @@
       </div>
     <% end %>
   </div>
+
 </div>
+
+上記のコードで、21行目”<p><%= similar_topic.content %></p>”はボタンになっています。
+このボタンをクリックしたときにこの内容を9行目”<p><%= @main_topic.content %></p>”に代入し、
+逆に21行目には代入した値に紐づく類題のコンテントを表示するようにしたいです。
+更に、SPAで実現したいのでReactなどを使ってコードを生成してください。

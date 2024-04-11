@@ -91,6 +91,9 @@
   width: 75%;
   margin: 80px auto 0 auto;
   text-align: center;
+  .font-error {
+    @include font_error(none, 30px auto 0 auto, 15px);
+  }
   h2 {
     margin-top: 50px;
   }
@@ -105,95 +108,92 @@
       @include color_group;
     }
   }
-  .font-error {
-    @include font_error(none, 30px auto 0 auto, 15px);
-  }
 }
 
 /*users/home*/
 .users-home-container {
   @include container;
   color: white;
-  p {
-    padding: 10px;
-    margin-right: 30px;
+  a {
+    text-decoration: none;
+    color: white;
   }
-  i {
-    margin-right: 10px;
-    display: inline;
+  .big-box {
+    @include center_column;
+    width: 320px;
+    padding: 20px;
+    margin: 0 auto 10px auto;
+    background-color: #ff7799;
+    border-radius: 20px;
+    p {
+      padding: 10px;
+      margin-right: 30px;
+    }
+    i {
+      margin-right: 10px;
+      display: inline;
+    }
+    .contents {
+      width: 260px;
+      .content {
+        @include vertical_center;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        .new-btn {
+          @include btn(100px, 30px, 30px, rgb(255, 159, 239));
+        }
+      }
+    }
   }
-}
-.users-home-big-box {
-  @include center_column;
-  width: 320px;
-  padding: 20px;
-  margin: 0 auto 10px auto;
-  background-color: #ff7799;
-  border-radius: 20px;
-}
-.users-home-small-box {
-  width: 260px;
-}
-.users-home-content {
-  @include vertical_center;
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  .fa-search,
-  .search-field {
-    float: left;
-  }
-  .users-home-new-btn {
-    @include btn(100px, 30px, 30px, rgb(255, 159, 239));
-  }
-}
-.users-home-start-btn {
-  @include btn(320px, 80px, 80px, darkorange);
-  font-size: 32px;
-  &:hover {
-    transform: scale(1.1);
+  .start-btn {
+    @include btn(320px, 80px, 80px, darkorange);
+    font-size: 32px;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }
 
 /*users/stock*/
 .users-stock-container {
   @include container;
-}
-.users-stock-big-box {
-  @include big_box;
-  cursor: default;
-  p {
-    @include break_word(44px);
+  .edit-link {
+    position: absolute;
+    top: 56px;
+    right: 10px;
+    li {
+      padding-left: 20px;
+      float: left;
+      list-style-type: none;
+    }
+    a {
+      font-size: 18px;
+      color: darkorange;
+      text-decoration: underline;
+    }
   }
-}
-.users-stock-small-boxes {
-  @include small_boxs;
-}
-.users-stock-small-box {
-  @include small_box(100px);
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  p {
-    @include break_word(18px);
+  .big-box {
+    @include big_box;
+    cursor: default;
+    p {
+      @include break_word(44px);
+    }
   }
-  &:hover {
-    transform: scale(1.09);
-    background-color: rgb(255, 170, 34);
-  }
-}
-.users-stock-edit-link {
-  position: absolute;
-  top: 56px;
-  right: 10px;
-  li {
-    padding-left: 20px;
-    float: left;
-    list-style-type: none;
-  }
-  a {
-    font-size: 18px;
-    color: darkorange;
-    text-decoration: underline;
+  .small-boxes {
+    @include small_boxs;
+    .small-box {
+      @include small_box(100px);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      p {
+        @include break_word(18px);
+      }
+      &:hover {
+        transform: scale(1.09);
+        background-color: rgb(255, 170, 34);
+      }
+    }
   }
 }
 
@@ -203,16 +203,16 @@
 }
 .users-new-container {
   @include container;
-  form .button {
+  .button {
     @include form_btn;
     @include color_group_mirror;
   }
-}
-.users-new-big-box {
-  @include big_box;
-}
-.users-new-big-text {
-  @include big_text;
+  .big-box {
+    @include big_box;
+    .big-text {
+      @include big_text;
+    }
+  }
 }
 
 /*users/edit*/
@@ -221,25 +221,25 @@
 }
 .users-edit-container {
   @include container;
-  form .button {
+  .button {
     @include form_btn;
     @include color_group_mirror;
   }
-}
-.users-edit-big-box {
-  @include big_box;
-}
-.users-edit-big-text {
-  @include big_text;
-}
-.users-edit-small-boxes {
-  @include small_boxs;
-}
-.users-edit-small-box {
-  @include small_box(120px);
-}
-.users-edit-small-text {
-  @include small_text;
+  .big-box {
+    @include big_box;
+    .big-text {
+      @include big_text;
+    }
+  }
+  .small-boxes {
+    @include small_boxs;
+    .small-box {
+      @include small_box(120px);
+      .small-text {
+        @include small_text;
+      }
+    }
+  }
 }
 
 /*users/delete*/
@@ -248,25 +248,25 @@
 }
 .users-delete-container {
   @include container;
-  form .button {
+  .button {
     @include form_btn;
     @include color_group_mirror;
   }
-}
-.users-delete-big-box {
-  @include big_box;
-}
-.users-delete-big-text {
-  @include big_text;
-  cursor: default;
-}
-.users-delete-small-boxes {
-  @include small_boxs;
-}
-.users-delete-small-box {
-  @include small_box(120px);
-}
-.users-delete-small-text {
-  @include small_text;
-  cursor: default;
+  .big-box {
+    @include big_box;
+    .big-text {
+      @include big_text;
+      cursor: default;
+    }
+  }
+  .small-boxes {
+    @include small_boxs;
+    .small-box {
+      @include small_box(120px);
+      .small-text {
+        @include small_text;
+        cursor: default;
+      }
+    }
+  }
 }

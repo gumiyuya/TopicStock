@@ -4,15 +4,15 @@
 
 <div class="users-edit-container">
 
-  <div class="users-edit-big-box">
+  <div class="big-box">
     <%= form_with(url: "/users/#{@topic.id}/update") do |form| %>
-      <%= form.text_area :content, class: "users-edit-big-text", required: true,
+      <%= form.text_area :content, class: "big-text", required: true,
       size: "20x4", maxlength: 40, value: @topic.content %>
       <%= form.submit class: "button", value: "編集" %>
     <% end %>
   </div>
 
-  <div class="users-edit-small-boxes">
+  <div class="small-boxes">
     <!-- 1.ランダムで表示された、ある話題に紐づく中間データを全て取り出す -->
     <% @connections.each do |connection| %>
       <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
@@ -21,9 +21,9 @@
       <% similar_topics.each do |similar_topic| %>
         <%= form_with(url: "/users/#{@topic.id}/s_update") do |form| %>
           <%= form.hidden_field :similar_topic_id, value: similar_topic.id %>
-          <div class="users-edit-small-box">
+          <div class="small-box">
             <!-- 4.取り出した類題のcontentのみをテキストエリア内に表示する -->
-            <%= form.text_area :content, class: "users-edit-small-text", required: true,
+            <%= form.text_area :content, class: "small-text", required: true,
             size: "20x4", maxlength: 40, value: similar_topic.content %>
             <%= form.submit class: "button", value: "編集" %>
           </div>
@@ -34,8 +34,8 @@
     <!-- 類題新規登録フォーム（類題が6つ未満の場合のみ新規登録可） -->
     <% if @connections.size < 6 %>
       <%= form_with(url: "/users/#{@topic.id}/s_create") do |form| %>
-        <div class="users-edit-small-box">
-          <%= form.text_area :content, class: "users-edit-small-text", required: true,
+        <div class="small-box">
+          <%= form.text_area :content, class: "small-text", required: true,
           size: "20x4", maxlength: 40 %>
           <%= form.submit class: "button", value: "ストック" %>
         </div>

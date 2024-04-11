@@ -4,18 +4,18 @@
 
 <div class="users-delete-container">
 
-  <div class="users-delete-big-box">
+  <div class="big-box">
     <%= form_with(
       url: "/users/#{@topic.id}/destroy",
       data: {turbo_confirm: "他のトピックとの紐づきからも削除されます。削除してよろしいですか？"}
       ) do |form| %>
-      <%= form.text_area :content, class: "users-delete-big-text", required: true,
+      <%= form.text_area :content, class: "big-text", required: true,
       size: "20x4", maxlength: 40, value: @topic.content, readonly: true %>
       <%= form.submit class: "button", value: "削除" %>
     <% end %>
   </div>
 
-  <div class="users-delete-small-boxes">
+  <div class="small-boxes">
     <!-- 1.ランダムで表示された、ある話題に紐づく中間データを全て取り出す -->
     <% @connections.each do |connection| %>
       <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
@@ -24,9 +24,9 @@
       <% similar_topics.each do |similar_topic| %>
         <%= form_with(url: "/users/#{@topic.id}/s_destroy") do |form| %>
           <%= form.hidden_field :similar_topic_id, value: similar_topic.id %>
-          <div class="users-delete-small-box">
+          <div class="small-box">
             <!-- 4.取り出した類題のcontentのみをテキストエリア内に表示する -->
-            <%= form.text_area :content, class: "users-delete-small-text", required: true,
+            <%= form.text_area :content, class: "small-text", required: true,
             size: "20x4", maxlength: 40, value: similar_topic.content, readonly: true %>
             <%= form.submit class: "button", value: "削除" %>
           </div>

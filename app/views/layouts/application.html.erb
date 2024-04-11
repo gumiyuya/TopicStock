@@ -20,7 +20,6 @@
       rel="stylesheet"
     >
   </head>
-
   <body>
 
     <div class="header" data-turbo="false">
@@ -33,20 +32,15 @@
       </div>
       <div class="header-links">
         <% if @current_user %>
-          <span>
-            <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
-          </span>
-          <span data-turbo="true">
-            <%= link_to("ログアウト", "/logout", data: {turbo_method: "post"}) %>
-          </span>
+          <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
+          <%= link_to("ログアウト", "/logout", data: {turbo: true, turbo_method: "post"}) %>
         <% else %>
-          <span>
-            <%= link_to("ログイン", "/login_form") %>
-          </span>
+          <%= link_to("ログイン", "/login_form") %>
         <% end %>
       </div>
     </div>
 
     <%= yield %>
+
   </body>
 </html>
