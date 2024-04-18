@@ -10,7 +10,7 @@
       "
     >
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -32,10 +32,20 @@
       </div>
       <div class="header-links">
         <% if @current_user %>
-          <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
-          <%= link_to("ログアウト", "/logout", data: {turbo: true, turbo_method: "post"}) %>
+          <%= link_to(@current_user.name, "/users/#{@current_user.id}", class: "pc-header-links") %>
+          <%= link_to("ログアウト", "/logout", class: "pc-header-links",
+          data: {turbo: true, turbo_method: "post"}) %>
+          <%= link_to("/logout", class: "sp-header-links",
+          data: {turbo: true, turbo_method: "post"}) do %>
+            <i class="fa fa-sign-out"></i>
+            <span class="header-caption">ログアウト</span>
+          <% end %>
         <% else %>
-          <%= link_to("ログイン", "/login_form") %>
+          <%= link_to("ログイン", "/login_form", class: "pc-header-links") %>
+          <%= link_to("/login_form", class: "sp-header-links") do %>
+            <i class="fa fa-sign-in"></i>
+            <span class="header-caption">ログイン</span>
+          <% end %>
         <% end %>
       </div>
     </div>

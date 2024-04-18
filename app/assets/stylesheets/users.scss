@@ -1,5 +1,19 @@
+@mixin sp {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+@mixin pc {
+  @media (min-width: 481px) {
+    @content;
+  }
+}
+
 @mixin container {
   margin-top: 110px;
+  @include sp {
+    margin-top: 80px;
+  }
   text-align: center;
 }
 @mixin btn($width, $height, $lineHeight, $bgColor) {
@@ -35,14 +49,18 @@
   background-color: white;
 }
 @mixin big_box {
-  @include vertical_center;
+  @include center_column;
   justify-content: center;
   width: 600px;
   height: 200px;
   margin: 0 auto 20px auto;
+  @include sp {
+    width: 100%;
+    margin: 0 auto 5px auto;
+  }
   background-color: darkorange;
   border-radius: 10px;
-  overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
+  overflow: hidden;
 }
 @mixin break_word($fontSize) {
   font-size: $fontSize;
@@ -50,12 +68,20 @@
   word-wrap: break-word;
 }
 @mixin big_text {
-  @include break_word(44px);
+  @include break_word(38px);
+  @include sp {
+    @include break_word(32px);
+    width: 90%;
+  }
+  line-height: 105%;
   background-color: darkorange;
   resize: none;
 }
 @mixin small_boxs {
   width: 610px;
+  @include sp {
+    width: 100%;
+  }
   margin: 0 auto;
 }
 @mixin small_box($height) {
@@ -65,22 +91,30 @@
   width: calc((600px - 20px) / 3);
   height: $height;
   margin: 5px 5px;
+  /* スマホ版はsmall-box2つとその間の長さの合計をbig-boxの長さと同じにする */
+  @include sp {
+    width: calc((100% - 8px) / 2);
+    margin: 2px 2px;
+  }
   float: left;
   background-color: #ffb52a;
   border-radius: 10px;
   white-space: pre-wrap; /* small-boxがbig-boxの幅に収まるように折り返す */
-  overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
+  overflow: hidden;
 }
 @mixin small_text {
-  @include break_word(17px);
+  @include break_word(16px);
+  @include sp {
+    width: 100%;
+  }
+  line-height: 105%;
   background-color: #ffb52a;
   resize: none;
 }
 @mixin font_error($positionAbsoluteTop, $margin, $fontSize) {
   position: absolute;
-  top: $positionAbsoluteTop;
-  left: 50%;
-  transform: translateX(-50%);
+  inset: $positionAbsoluteTop 0 0 0;
+  transform: translateY(-50%);
   margin: $margin;
   font-size: $fontSize;
   color: red;
@@ -88,11 +122,14 @@
 
 /*users/login_form*/
 .users-login_form-organized-section {
-  width: 75%;
+  width: 100%;
   margin: 80px auto 0 auto;
   text-align: center;
-  .font-error {
-    @include font_error(none, 30px auto 0 auto, 15px);
+  .section {
+    position: relative;
+    .font-error {
+      @include font_error(60px, 0 auto, 15px);
+    }
   }
   h2 {
     margin-top: 50px;
@@ -102,6 +139,7 @@
     label,
     input {
       margin-bottom: 10px;
+      font-size: 16px;
     }
     .button {
       @include form_btn;
@@ -140,6 +178,9 @@
         width: 100%;
         padding: 10px;
         font-size: 16px;
+        form input {
+          font-size: 14px;
+        }
         .new-btn {
           @include btn(100px, 30px, 30px, rgb(255, 159, 239));
         }
@@ -149,8 +190,10 @@
   .start-btn {
     @include btn(320px, 80px, 80px, darkorange);
     font-size: 32px;
-    &:hover {
-      transform: scale(1.1);
+    @include pc {
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 }
@@ -177,7 +220,11 @@
     @include big_box;
     cursor: default;
     p {
-      @include break_word(44px);
+      @include break_word(42px);
+      @include sp {
+        @include break_word(34px);
+      }
+      line-height: 105%;
     }
   }
   .small-boxes {
@@ -188,21 +235,31 @@
       transition: transform 0.3s ease;
       p {
         @include break_word(18px);
+        @include sp {
+          @include break_word(16px);
+        }
+        line-height: 105%;
       }
-      &:hover {
-        transform: scale(1.09);
-        background-color: rgb(255, 170, 34);
+      @include pc {
+        &:hover {
+          transform: scale(1.09);
+          background-color: rgb(255, 170, 34);
+        }
       }
     }
   }
 }
 
 /*users/new*/
-.users-new-font-error {
-  @include font_error(50px, 0, 20px);
-}
 .users-new-container {
   @include container;
+  position: relative;
+  .font-error {
+    @include font_error(50px, 0 auto, 15px);
+    @include sp {
+      @include font_error(40px, 0 auto, 12px);
+    }
+  }
   .button {
     @include form_btn;
     @include color_group_mirror;
@@ -216,11 +273,15 @@
 }
 
 /*users/edit*/
-.users-edit-font-error {
-  @include font_error(50px, 0, 20px);
-}
 .users-edit-container {
   @include container;
+  position: relative;
+  .font-error {
+    @include font_error(50px, 0 auto, 15px);
+    @include sp {
+      @include font_error(40px, 0 auto, 12px);
+    }
+  }
   .button {
     @include form_btn;
     @include color_group_mirror;
@@ -234,7 +295,7 @@
   .small-boxes {
     @include small_boxs;
     .small-box {
-      @include small_box(120px);
+      @include small_box(110px);
       .small-text {
         @include small_text;
       }
@@ -243,9 +304,6 @@
 }
 
 /*users/delete*/
-.users-delete-font-error {
-  @include font_error(50px, 0, 20px);
-}
 .users-delete-container {
   @include container;
   .button {

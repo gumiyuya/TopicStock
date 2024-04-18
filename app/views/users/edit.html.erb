@@ -1,16 +1,16 @@
-<% if @existing_error_message %>
-  <p class="users-edit-font-error"><%= @existing_error_message %></p>
-<% end %>
-
 <div class="users-edit-container">
 
-  <div class="big-box">
-    <%= form_with(url: "/users/#{@topic.id}/update") do |form| %>
+  <% if @existing_error_message %>
+    <p class="font-error"><%= @existing_error_message %></p>
+  <% end %>
+
+  <%= form_with(url: "/users/#{@topic.id}/update") do |form| %>
+    <div class="big-box">
       <%= form.text_area :content, class: "big-text", required: true,
       size: "20x4", maxlength: 40, value: @topic.content %>
       <%= form.submit class: "button", value: "編集" %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
   <div class="small-boxes">
     <!-- 1.ランダムで表示された、ある話題に紐づく中間データを全て取り出す -->
@@ -30,7 +30,6 @@
         <% end %>
       <% end %>
     <% end %>
-
     <!-- 類題新規登録フォーム（類題が6つ未満の場合のみ新規登録可） -->
     <% if @connections.size < 6 %>
       <%= form_with(url: "/users/#{@topic.id}/s_create") do |form| %>
@@ -41,7 +40,6 @@
         </div>
       <% end %>
     <% end %>
-
   </div>
 
 </div>

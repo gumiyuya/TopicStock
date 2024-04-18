@@ -1,13 +1,15 @@
-<% if @existing_error_message %>
-  <p class="users-new-font-error"><%= @existing_error_message %></p>
-<% end %>
-
 <div class="users-new-container">
-  <div class="big-box">
-    <%= form_with(url: "/users/#{@current_user.id}/create") do |form| %>
+
+  <% if @existing_error_message %>
+    <p class="font-error"><%= @existing_error_message %></p>
+  <% end %>
+
+  <%= form_with(url: "/users/#{@current_user.id}/create") do |form| %>
+    <div class="big-box">
       <%= form.text_area :content, class: "big-text", required: true,
       size: "20x4", maxlength: 40 %>
-      <%= form.submit class: "button", value: "ストック" %>
-    <% end %>
-  </div>
+      <%=  form.submit class: "button", value: "ストック" %>
+    </div>
+  <% end %>
+
 </div>

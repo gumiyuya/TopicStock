@@ -1,19 +1,15 @@
-<% if @existing_error_message %>
-  <p class="users-delete-font-error"><%= @existing_error_message %></p>
-<% end %>
-
 <div class="users-delete-container">
 
-  <div class="big-box">
-    <%= form_with(
-      url: "/users/#{@topic.id}/destroy",
-      data: {turbo_confirm: "他のトピックとの紐づきからも削除されます。削除してよろしいですか？"}
-      ) do |form| %>
+  <%= form_with(
+    url: "/users/#{@topic.id}/destroy",
+    data: {turbo_confirm: "他のトピックとの紐づきも削除されます。削除してよろしいですか？"}
+    ) do |form| %>
+    <div class="big-box">
       <%= form.text_area :content, class: "big-text", required: true,
       size: "20x4", maxlength: 40, value: @topic.content, readonly: true %>
       <%= form.submit class: "button", value: "削除" %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
   <div class="small-boxes">
     <!-- 1.ランダムで表示された、ある話題に紐づく中間データを全て取り出す -->

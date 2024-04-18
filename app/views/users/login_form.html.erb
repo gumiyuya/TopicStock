@@ -1,10 +1,9 @@
 <div class="users-login_form-organized-section">
 
-  <% if @login_error_message %>
-    <p class="font-error"><%= @login_error_message %></p>
-  <% end %>
-
-  <div class="login-section" id="login-form">
+  <div class="section" id="login-form">
+    <% if @login_error_message %>
+      <p class="font-error"><%= @login_error_message %></p>
+    <% end %>
     <h2>ログイン</h2>
     <%= form_with(url: "/login") do |form| %>
       <%= form.label :username, "ユーザー名:" %>
@@ -15,11 +14,10 @@
     <% end %>
   </div>
 
-  <% if @signup_error_message %>
-    <p class="font-error"><%= @signup_error_message %></p>
-  <% end %>
-
-  <div class="signup-section" id="signup-form">
+  <div class="section" id="signup-form">
+    <% if @signup_error_message %>
+      <p class="font-error"><%= @signup_error_message %></p>
+    <% end %>
     <h2>新規登録はこちら</h2>
     <%= form_with(url: "/signup") do |form| %> 
       <%= form.label :newname, "新しいユーザー名:" %>

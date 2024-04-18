@@ -1,5 +1,19 @@
+@mixin sp {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+@mixin pc {
+  @media (min-width: 481px) {
+    @content;
+  }
+}
+
 @mixin container {
   margin-top: 110px;
+  @include sp {
+    margin-top: 80px;
+  }
   text-align: center;
 }
 @mixin vertical_center {
@@ -17,6 +31,9 @@
 }
 @mixin small_boxs {
   width: 610px;
+  @include sp {
+    width: 100%;
+  }
   margin: 0 auto;
 }
 @mixin small_box($height) {
@@ -25,40 +42,50 @@
   width: calc((600px - 20px) / 3);
   height: $height;
   margin: 5px 5px;
+  @include sp {
+    width: calc((100% - 8px) / 2);
+    margin: 2px 2px;
+  }
   float: left;
   background-color: #ffb52a;
   border-radius: 10px;
   white-space: pre-wrap;
-  overflow: hidden; /* 枠外のテキストを切り捨てる（平仮名40字まで） */
+  overflow: hidden;
 }
 @mixin font_error($positionAbsoluteTop, $margin, $fontSize) {
   position: absolute;
-  top: $positionAbsoluteTop;
-  left: 50%;
-  transform: translateX(-50%);
+  inset: $positionAbsoluteTop 0 0 0;
+  transform: translateY(-50%);
   margin: $margin;
   font-size: $fontSize;
   color: red;
 }
 
-.searchs-font-error {
-  @include font_error(50px, 0, 20px);
-}
 .searchs-container {
   @include container;
-}
-.searchs-small-boxes {
-  @include small_boxs;
-}
-.searchs-small-box {
-  @include small_box(100px);
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  p {
-    @include break_word(18px);
+  position: relative;
+  .font-error {
+    @include font_error(0, 0 auto, 15px);
   }
-  &:hover {
-    transform: scale(1.09);
-    background-color: rgb(255, 170, 34);
+  .small-boxes {
+    @include small_boxs;
+    .small-box {
+      @include small_box(100px);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      p {
+        @include break_word(18px);
+        @include sp {
+          @include break_word(16px);
+        }
+        line-height: 105%;
+      }
+      @include pc {
+        &:hover {
+          transform: scale(1.09);
+          background-color: rgb(255, 170, 34);
+        }
+      }
+    }
   }
 }

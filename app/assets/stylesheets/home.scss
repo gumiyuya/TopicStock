@@ -1,3 +1,14 @@
+@mixin sp {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+@mixin pc {
+  @media (min-width: 481px) {
+    @content;
+  }
+}
+
 @mixin home_box {
   width: 320px;
   padding: 20px;
@@ -25,6 +36,10 @@ body {
     width: 100%;
     height: 50px;
     padding: 10px;
+    @include sp {
+      height: 40px;
+      padding: 5px;
+    }
     position: fixed;
     top: 0;
     left: 0;
@@ -32,18 +47,50 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @include sp {
+      justify-content: center;
+    }
     background-color: darkorange;
     a {
       text-decoration: none;
       color: white;
     }
     .header-title {
-      font-size: 24px;
+      font-weight: bold;
+      font-size: 20px;
+      @include sp {
+        font-size: 18px;
+      }
     }
     .header-links {
       font-size: 16px;
-      a:not(:first-child) {
-        margin-left: 20px;
+      @include pc {
+        a:not(:first-child) {
+          margin-left: 20px;
+        }
+        .sp-header-links {
+          display: none;
+        }
+      }
+      @include sp {
+        position: absolute;
+        right: 10px;
+        .sp-header-links {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: center;
+          .fa {
+            font-size: 25px;
+            font-family: FontAwesome;
+          }
+          .header-caption {
+            font-size: 9px;
+          }
+        }
+        .pc-header-links {
+          display: none;
+        }
       }
     }
   }
@@ -52,6 +99,9 @@ body {
 /*home/top*/
 .top-container {
   margin-top: 110px;
+  @include sp {
+    margin-top: 80px;
+  }
   text-align: center;
   color: white;
   a {
@@ -69,8 +119,10 @@ body {
   .top-start-btn {
     @include btn;
     transition: transform 0.3s ease;
-    &:hover {
-      transform: scale(1.1);
+    @include pc {
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 }
