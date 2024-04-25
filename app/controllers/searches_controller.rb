@@ -1,12 +1,20 @@
 class SearchesController < ApplicationController
 
   def search
-    @keyword = params[:keyword]
-    @topics = Topic.where(
-      "content LIKE? AND user_id = ?",
-      "%#{@keyword}%", @current_user.id
-    )
-    if @topics.count == 0
+    # 空白で区切りand検索できるようにする
+    keywords = params[:keyword].split(/[[:blank:]]+/)
+    @topics = Topic.all
+    keywords.each do |keyword|
+      next if keyword.nil? || keyword.empty? # 空白やnilを配列から除外
+      @topics = @topics.where(
+        "content LIKE? AND user_id = ?",
+        "%#{keyword}%", @current_user.id
+      )
+    end
+    if @topics.nil?
+      @error_message = "トピックが見つかりませんでした" 
+    else
+      @topics.count == 0
       @error_message = "トピックが見つかりませんでした"
     end
   end

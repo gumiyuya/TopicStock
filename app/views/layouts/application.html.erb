@@ -33,10 +33,14 @@
       <div class="header-links">
         <% if @current_user %>
           <%= link_to(@current_user.name, "/users/#{@current_user.id}", class: "pc-header-links") %>
-          <%= link_to("ログアウト", "/logout", class: "pc-header-links",
-          data: {turbo: true, turbo_method: "post"}) %>
-          <%= link_to("/logout", class: "sp-header-links",
-          data: {turbo: true, turbo_method: "post"}) do %>
+          <%= link_to(
+            "ログアウト", "/logout", class: "pc-header-links",
+            data: {turbo: true, turbo_method: "post"}
+          ) %>
+          <%= link_to(
+            "/logout", class: "sp-header-links",
+            data: {turbo: true, turbo_method: "post"}
+          ) do %>
             <i class="fa fa-sign-out"></i>
             <span class="header-caption">ログアウト</span>
           <% end %>

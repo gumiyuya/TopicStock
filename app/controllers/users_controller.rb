@@ -47,7 +47,12 @@ class UsersController < ApplicationController
   def stock
     user = User.find_by(id: params[:id])
     topics = Topic.where(user_id: user.id)
-    @main_topic = topics[rand(topics.size)]
+    @topic = Topic.find_by(id: params[:topic_id])
+    if @topic
+      @main_topic = @topic
+    else
+      @main_topic = topics[rand(topics.size)]
+    end
     @connections = Connection.where(topic_id: @main_topic.id)
   end
 

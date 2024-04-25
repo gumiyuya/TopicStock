@@ -14,14 +14,24 @@
     <% @connections.each do |connection| %>
       <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
       <% similar_topics = SimilarTopic.where(id: connection.similar_topic_id) %>
-      <div class="small-box">
-        <!-- 3.代入した類題を全て取り出す -->
-        <% similar_topics.each do |similar_topic| %>
-          <!-- 4.取り出した類題のcontentのみを表示する -->
-          <p><%= similar_topic.content %></p>
-        <% end %>
-      </div>
+      <!-- 3.代入した類題を全て取り出す -->
+      <% similar_topics.each do |similar_topic| %>
+        <div class="small-box">
+        <!-- 4.取り出した類題のcontentのみを表示する -->
+          <%= button_to(
+            similar_topic.content, "/users/#{@current_user.id}/stock",
+            {method: :get, params: {id: @current_user.id, topic_id: similar_topic.id}, class: "button"}
+          ) %>
+        </div>
+      <% end %>
     <% end %>
   </div>
+
+  <%= button_to(
+    "/users/#{@current_user.id}/stock",
+    {method: :get, params: {id: @current_user.id}, class: "reload"}
+  ) do %>
+    <i class="fa fa-refresh"></i>
+  <% end %>
 
 </div>

@@ -1,12 +1,16 @@
 <div class="searchs-container">
-  <% if @error_message %>
-    <p class="font-error"><%= @error_message %></p>
-  <% end %>
-  <div class="small-boxes">
-    <% @topics.each do |topic| %>
-      <div class="small-box">
-        <p><%= topic.content %></p>
-      </div>
+  <% if @topics.present? && @topics != Topic.all %>
+    <div class="small-boxes">
+      <% @topics.each do |topic| %>
+        <%= button_to(
+          topic.content, "/users/#{@current_user.id}/stock",
+          {method: :get, params: {id: @current_user.id, topic_id: topic.id}, class: "button"}
+        ) %>
+      <% end %>
+    </div>
+  <%else%>
+    <% if @error_message %>
+      <p class="font-error"><%= @error_message %></p>
     <% end %>
-  </div>
+  <% end %>
 </div>

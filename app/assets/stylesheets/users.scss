@@ -9,13 +9,6 @@
   }
 }
 
-@mixin container {
-  margin-top: 110px;
-  @include sp {
-    margin-top: 80px;
-  }
-  text-align: center;
-}
 @mixin btn($width, $height, $lineHeight, $bgColor) {
   width: $width;
   height: $height;
@@ -47,6 +40,13 @@
 @mixin color_group_mirror {
   color: darkorange;
   background-color: white;
+}
+@mixin container {
+  margin-top: 110px;
+  @include sp {
+    margin-top: 80px;
+  }
+  text-align: center;
 }
 @mixin big_box {
   @include center_column;
@@ -189,6 +189,7 @@
   }
   .start-btn {
     @include btn(320px, 80px, 80px, darkorange);
+    @include center_column;
     font-size: 32px;
     @include pc {
       &:hover {
@@ -201,6 +202,7 @@
 /*users/stock*/
 .users-stock-container {
   @include container;
+  @include center_column;
   .edit-link {
     position: absolute;
     top: 56px;
@@ -229,23 +231,41 @@
   }
   .small-boxes {
     @include small_boxs;
-    .small-box {
+    .button {
       @include small_box(100px);
+      border: 0px solid;
       cursor: pointer;
       transition: transform 0.3s ease;
-      p {
-        @include break_word(18px);
-        @include sp {
-          @include break_word(16px);
-        }
-        line-height: 105%;
+      @include break_word(18px);
+      @include sp {
+        @include break_word(16px);
       }
+      line-height: 105%;
       @include pc {
         &:hover {
           transform: scale(1.09);
           background-color: rgb(255, 170, 34);
         }
       }
+    }
+  }
+  .reload {
+    @include center_column;
+    justify-content: center;
+    width: 100px;
+    height: 50px;
+    margin: 20px auto 0 auto;
+    font-size: 18px;
+    @include sp {
+      width: 50px;
+      margin: 5px auto 0 auto;
+    }
+    background-color: rgb(255, 159, 239);
+    border-radius: 10px;
+    border: 0px solid;
+    cursor: pointer;
+    .fa {
+      color: white;
     }
   }
 }
