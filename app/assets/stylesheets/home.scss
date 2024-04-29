@@ -116,7 +116,7 @@ body {
       word-wrap: break-word;
     }
   }
-  .top-start-btn {
+  .start-btn {
     @include btn;
     transition: transform 0.3s ease;
     @include pc {
