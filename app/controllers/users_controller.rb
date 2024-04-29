@@ -53,13 +53,18 @@ class UsersController < ApplicationController
 
   # ユーザーのストックページ
   def stock
-    topics = Topic.where(user_id: user.id)
     @topic = Topic.find_by(id: params[:topic_id])
-    if !@topic
-      random_topic = topics[rand(topics.size)]
-      @topic = random_topic
+    if @topic
+      @connections = Connection.where(topic_id: @topic.id)
+    else
+      topics = Topic.where(user_id: @user.id)
+      @topic = topics[rand(topics.size)]
+      if !@topic
+        @not_yet_error_message = "まだトピックをストックしていません"
+      else
+        @connections = Connection.where(topic_id: @topic.id)
+      end
     end
-    @connections = Connection.where(topic_id: @topic.id)
   end
 
   # ユーザーの新規ストックページ
@@ -177,8 +182,8 @@ class UsersController < ApplicationController
 
   # アクセス制限
   def ensure_correct_user_by_user_id
-    user = User.find_by(id: params[:id])
-    if user == nil || user.id != @current_user.id
+    @user = User.find_by(id: params[:id])
+    if @user == nil || @user.id != @current_user.id
       session[:user_id] = nil
       redirect_to("/TopicStock")
     end

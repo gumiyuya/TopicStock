@@ -203,6 +203,12 @@
 /*users/stock*/
 .users-stock-container {
   @include container;
+  .font-error {
+    @include font_error(none, 0 auto, 15px);
+    @include sp {
+      @include font_error(none, 0 auto, 12px);
+    }
+  }
   @include center_column;
   .edit-link {
     position: absolute;
