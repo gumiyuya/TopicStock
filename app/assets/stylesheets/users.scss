@@ -115,6 +115,7 @@
   position: absolute;
   inset: $positionAbsoluteTop 0 0 0;
   transform: translateY(-50%);
+  z-index: -1;
   margin: $margin;
   font-size: $fontSize;
   color: red;

@@ -1,12 +1,12 @@
 <div class="users-stock-container">
 
   <div class="edit-link">
-    <li><%= link_to("編集", "/users/#{@main_topic.id}/edit") %></li>
-    <li><%= link_to("削除", "/users/#{@main_topic.id}/delete") %></li>
+    <li><%= link_to("編集", "/users/#{@topic.id}/edit") %></li>
+    <li><%= link_to("削除", "/users/#{@topic.id}/delete") %></li>
   </div>
 
   <div class="big-box">
-    <p><%= @main_topic.content %></p>
+    <p><%= @topic.content %></p>
   </div>
 
   <div class="small-boxes">
@@ -20,7 +20,7 @@
         <!-- 4.取り出した類題のcontentのみを表示する -->
           <%= button_to(
             similar_topic.content, "/users/#{@current_user.id}/stock",
-            {method: :get, params: {id: @current_user.id, topic_id: similar_topic.id}, class: "button"}
+            {method: :get, params: {topic_id: similar_topic.id}, class: "button"}
           ) %>
         </div>
       <% end %>
@@ -29,7 +29,7 @@
 
   <%= button_to(
     "/users/#{@current_user.id}/stock",
-    {method: :get, params: {id: @current_user.id}, class: "reload"}
+    {method: :get, class: "reload"}
   ) do %>
     <i class="fa fa-refresh"></i>
   <% end %>

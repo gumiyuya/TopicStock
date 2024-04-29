@@ -1,5 +1,13 @@
 class UsersController < ApplicationController
-  before_action :get_connections_from_topics, only: [:edit, :update, :s_update, :s_create, :delete]
+  before_action :ensure_correct_user_by_user_id, {
+    only: [:home, :stock, :new, :create]
+  }
+  before_action :ensure_correct_user_by_topic_id, {
+    only: [:edit, :update, :s_update, :s_create, :delete, :destroy, :s_destroy]
+  }
+  before_action :get_connections_from_topics, {
+    only: [:edit, :update, :s_update, :s_create, :delete, :s_destroy]
+  }
 
   # ログインページ
   def login_form
@@ -45,20 +53,20 @@ class UsersController < ApplicationController
 
   # ユーザーのストックページ
   def stock
-    user = User.find_by(id: params[:id])
     topics = Topic.where(user_id: user.id)
     @topic = Topic.find_by(id: params[:topic_id])
-    if @topic
-      @main_topic = @topic
-    else
-      @main_topic = topics[rand(topics.size)]
+    if !@topic
+      random_topic = topics[rand(topics.size)]
+      @topic = random_topic
     end
-    @connections = Connection.where(topic_id: @main_topic.id)
+    @connections = Connection.where(topic_id: @topic.id)
   end
 
+  # ユーザーの新規ストックページ
   def new
   end
 
+  # 話題の新規ストック
   def create
     @topic = Topic.new(content: params[:content], user_id: @current_user.id)
     @similar_topic = SimilarTopic.new(content: params[:content], user_id: @current_user.id)
@@ -81,11 +89,9 @@ class UsersController < ApplicationController
       @existing_error_message = "そのトピックは既にストックしています"
       render("users/edit", status: :unprocessable_entity)
     else
-      @main_topic = Topic.find_by(id: params[:id])
       similar_topic = SimilarTopic.find_by(id: params[:id])
-      @main_topic.update(content: params[:content])
+      @topic.update(content: params[:content])
       similar_topic.update(content: params[:content])
-      @connections = Connection.where(topic_id: @main_topic.id)
       render("users/stock", status: :unprocessable_entity)
     end
   end
@@ -102,13 +108,11 @@ class UsersController < ApplicationController
       similar_topic = SimilarTopic.find_by(id: params[:similar_topic_id])
       topic.update(content: params[:content])
       similar_topic.update(content: params[:content])
-      @main_topic = @topic
-      @connections = Connection.where(topic_id: @main_topic.id)
       render("users/stock", status: :unprocessable_entity)
     end
   end
 
-  # 新規類題登録
+  # 類題の新規ストック
   def s_create
     # 新規登録した類題が既にDBに存在し、
     if existing_similar_topic = SimilarTopic.find_by(
@@ -136,8 +140,6 @@ class UsersController < ApplicationController
           topic_id:         existing_similar_topic.id,
           similar_topic_id: params[:id]
         )
-        @main_topic = @topic
-        @connections = Connection.where(topic_id: @main_topic.id)
         render("users/stock", status: :unprocessable_entity)
       end
     else # 新規登録した類題がまだDBに存在しないならDBへの追加も行う
@@ -145,8 +147,6 @@ class UsersController < ApplicationController
       similar_topic = SimilarTopic.create(content: params[:content], user_id: @current_user.id)
       connection1 = Connection.create(topic_id: params[:id], similar_topic_id: similar_topic.id)
       connection2 = Connection.create(topic_id: similar_topic.id, similar_topic_id: params[:id])
-      @main_topic = @topic
-      @connections = Connection.where(topic_id: @main_topic.id)
       render("users/stock", status: :unprocessable_entity)
     end
   end
@@ -172,13 +172,28 @@ class UsersController < ApplicationController
       topic_id:         params[:similar_topic_id],
       similar_topic_id: params[:id]
     ).destroy
-    @main_topic = Topic.find_by(id: params[:id])
-    @connections = Connection.where(topic_id: @main_topic.id)
     render("users/stock", status: :unprocessable_entity)
   end
 
-  def get_connections_from_topics
+  # アクセス制限
+  def ensure_correct_user_by_user_id
+    user = User.find_by(id: params[:id])
+    if user == nil || user.id != @current_user.id
+      session[:user_id] = nil
+      redirect_to("/TopicStock")
+    end
+  end
+  def ensure_correct_user_by_topic_id
     @topic = Topic.find_by(id: params[:id])
+    if @current_user == nil
+      redirect_to("/TopicStock")
+    elsif @topic == nil || @topic.user_id != @current_user.id
+      redirect_to("/users/#{@current_user.id}")
+    end
+  end
+
+  # ストックページ表示のためのメソッド
+  def get_connections_from_topics
     @connections = Connection.where(topic_id: @topic.id)
   end
 

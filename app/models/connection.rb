@@ -19,7 +19,7 @@ class Connection < ApplicationRecord
 
   def validate_different_topic_and_similar_topic
     if topic_id == similar_topic_id
-      errors.add(:base, "同じ話題同士は紐づけられません")
+      errors.add(:base, "同じトピック同士は紐づけられません")
     end
   end
 end
