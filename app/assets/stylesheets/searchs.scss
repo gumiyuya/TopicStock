@@ -60,6 +60,25 @@
   font-size: $fontSize;
   color: red;
 }
+@mixin turbo_btn {
+  @include center_column;
+  justify-content: center;
+  width: 100px;
+  height: 40px;
+  margin: 20px auto 0 auto;
+  font-size: 18px;
+  @include sp {
+    width: 40px;
+    margin: 5px auto 0 auto;
+  }
+  background-color: rgb(255, 159, 239);
+  border-radius: 10px;
+  border: 0px solid;
+  cursor: pointer;
+  .fa {
+    color: white;
+  }
+}
 
 .searchs-container {
   @include container;
@@ -86,5 +105,8 @@
         }
       }
     }
+  }
+  .back {
+    @include turbo_btn;
   }
 }

@@ -1,26 +1,28 @@
 <div class="users-stock-container">
 
-  <div class="big-box">
-    <p><%= @topic.content %></p>
-  </div>
+  <%= turbo_frame_tag "topic-boxes" do %>
+    <div class="big-box">
+      <p><%= @topic.content %></p>
+    </div>
 
-  <div class="small-boxes">
-    <!-- 1.ランダムで表示される話題に紐づく中間データを全て取り出す -->
-    <% @connections.each do |connection| %>
-      <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
-      <% similar_topics = SimilarTopic.where(id: connection.similar_topic_id) %>
-      <!-- 3.代入した類題を全て取り出す -->
-      <% similar_topics.each do |similar_topic| %>
-        <div class="small-box">
-        <!-- 4.取り出した類題のcontentのみを表示する -->
-          <%= button_to(
-            similar_topic.content, "/topics/stock",
-            {method: :get, params: {topic_id: similar_topic.id}, class: "button"}
-          ) %>
-        </div>
+    <div class="small-boxes">
+      <!-- 1.ランダムで表示される話題に紐づく中間データを全て取り出す -->
+      <% @connections.each do |connection| %>
+        <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
+        <% similar_topics = SimilarTopic.where(id: connection.similar_topic_id) %>
+        <!-- 3.代入した類題を全て取り出す -->
+        <% similar_topics.each do |similar_topic| %>
+          <div class="small-box">
+          <!-- 4.取り出した類題のcontentのみを表示する -->
+            <%= button_to(
+              similar_topic.content, "/topics/stock",
+              {method: :get, params: {topic_id: similar_topic.id}, class: "button"}
+            ) %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
   <%= button_to(
     "/topics/stock",

@@ -1,15 +1,24 @@
-<div class="users-new-container">
+<%= turbo_frame_tag "topic_boxes" do %>
+  <div class="users-new-container">
 
-  <% if @existing_error_message %>
-    <p class="font-error"><%= @existing_error_message %></p>
-  <% end %>
+    <% if @existing_error_message %>
+      <p class="font-error"><%= @existing_error_message %></p>
+    <% end %>
 
-  <%= form_with(url: "/users/#{@current_user.id}/create") do |form| %>
-    <div class="big-box">
-      <%= form.text_area :content, class: "big-text", required: true,
-      size: "20x4", maxlength: 40 %>
-      <%=  form.submit class: "button", value: "ストック" %>
-    </div>
-  <% end %>
+    <%= form_with(url: "/users/#{@current_user.id}/create") do |form| %>
+      <div class="big-box">
+        <%= form.text_area :content, class: "big-text", required: true,
+        size: "20x4", maxlength: 40 %>
+        <%=  form.submit class: "button", value: "ストック" %>
+      </div>
+    <% end %>
 
-</div>
+    <%= button_to(
+      "/users/#{@current_user.id}",
+      {method: :get, class: "back"}
+    ) do %>
+      <i class="fa fa-arrow-left"></i>
+    <% end %>
+
+  </div>
+<% end %>

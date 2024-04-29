@@ -120,6 +120,25 @@
   font-size: $fontSize;
   color: red;
 }
+@mixin turbo_btn {
+  @include center_column;
+  justify-content: center;
+  width: 100px;
+  height: 40px;
+  margin: 20px auto 0 auto;
+  font-size: 18px;
+  @include sp {
+    width: 40px;
+    margin: 5px auto 0 auto;
+  }
+  background-color: rgb(255, 159, 239);
+  border-radius: 10px;
+  border: 0px solid;
+  cursor: pointer;
+  .fa {
+    color: white;
+  }
+}
 
 /*users/login_form*/
 .users-login_form-organized-section {
@@ -203,13 +222,13 @@
 /*users/stock*/
 .users-stock-container {
   @include container;
+  @include center_column;
   .font-error {
     @include font_error(none, 0 auto, 15px);
     @include sp {
       @include font_error(none, 0 auto, 12px);
     }
   }
-  @include center_column;
   .edit-link {
     position: absolute;
     top: 56px;
@@ -257,29 +276,14 @@
     }
   }
   .reload {
-    @include center_column;
-    justify-content: center;
-    width: 100px;
-    height: 50px;
-    margin: 20px auto 0 auto;
-    font-size: 18px;
-    @include sp {
-      width: 50px;
-      margin: 5px auto 0 auto;
-    }
-    background-color: rgb(255, 159, 239);
-    border-radius: 10px;
-    border: 0px solid;
-    cursor: pointer;
-    .fa {
-      color: white;
-    }
+    @include turbo_btn;
   }
 }
 
 /*users/new*/
 .users-new-container {
   @include container;
+  @include center_column;
   position: relative;
   .font-error {
     @include font_error(50px, 0 auto, 15px);
@@ -297,11 +301,15 @@
       @include big_text;
     }
   }
+  .back {
+    @include turbo_btn;
+  }
 }
 
 /*users/edit*/
 .users-edit-container {
   @include container;
+  @include center_column;
   position: relative;
   .font-error {
     @include font_error(50px, 0 auto, 15px);
@@ -328,11 +336,15 @@
       }
     }
   }
+  .back {
+    @include turbo_btn;
+  }
 }
 
 /*users/delete*/
 .users-delete-container {
   @include container;
+  @include center_column;
   .button {
     @include form_btn;
     @include color_group_mirror;
@@ -353,5 +365,8 @@
         cursor: default;
       }
     }
+  }
+  .back {
+    @include turbo_btn;
   }
 }
