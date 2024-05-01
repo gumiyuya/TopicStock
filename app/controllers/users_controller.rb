@@ -11,7 +11,6 @@ class UsersController < ApplicationController
 
   # ログインページ
   def login_form
-    @user = User.new
   end
 
   # ログイン成功時のみユーザーページへ
@@ -183,7 +182,9 @@ class UsersController < ApplicationController
   # アクセス制限
   def ensure_correct_user_by_user_id
     @user = User.find_by(id: params[:id])
-    if @user == nil || @user.id != @current_user.id
+    if @user == nil || !@current_user
+      redirect_to("/TopicStock")
+    elsif @user.id != @current_user.id
       session[:user_id] = nil
       redirect_to("/TopicStock")
     end

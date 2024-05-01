@@ -82,6 +82,7 @@
 
 .searchs-container {
   @include container;
+  @include center_column;
   position: relative;
   .font-error {
     @include font_error(0, 0 auto, 15px);

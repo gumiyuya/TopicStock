@@ -111,13 +111,16 @@
   background-color: #ffb52a;
   resize: none;
 }
-@mixin font_error($positionAbsoluteTop, $margin, $fontSize) {
+@mixin font_error($positionAbsoluteTop, $translateY, $margin) {
   position: absolute;
   inset: $positionAbsoluteTop 0 0 0;
-  transform: translateY(-50%);
+  transform: translateY($translateY);
   z-index: -1;
   margin: $margin;
-  font-size: $fontSize;
+  font-size: 15px;
+  @include sp {
+    font-size: 12px;
+  }
   color: red;
 }
 @mixin turbo_btn {
@@ -148,7 +151,7 @@
   .section {
     position: relative;
     .font-error {
-      @include font_error(60px, 0 auto, 15px);
+      @include font_error(60px, -50%, 0 auto);
     }
   }
   h2 {
@@ -224,10 +227,7 @@
   @include container;
   @include center_column;
   .font-error {
-    @include font_error(none, 0 auto, 15px);
-    @include sp {
-      @include font_error(none, 0 auto, 12px);
-    }
+    @include font_error(none, -200%, 0 auto);
   }
   .edit-link {
     position: absolute;
@@ -284,12 +284,8 @@
 .users-new-container {
   @include container;
   @include center_column;
-  position: relative;
   .font-error {
-    @include font_error(50px, 0 auto, 15px);
-    @include sp {
-      @include font_error(40px, 0 auto, 12px);
-    }
+    @include font_error(none, -200%, 0 auto);
   }
   .button {
     @include form_btn;
@@ -310,12 +306,8 @@
 .users-edit-container {
   @include container;
   @include center_column;
-  position: relative;
   .font-error {
-    @include font_error(50px, 0 auto, 15px);
-    @include sp {
-      @include font_error(40px, 0 auto, 12px);
-    }
+    @include font_error(none, -200%, 0 auto);
   }
   .button {
     @include form_btn;

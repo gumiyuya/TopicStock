@@ -1,38 +1,41 @@
 <div class="users-login_form-organized-section">
+  <% if @current_user %>
+    <p class="font-error">既にログインしています</p>
+  <%else%>
 
-  <div class="section" id="login-form">
-    <% if @login_error_message %>
-      <p class="font-error"><%= @login_error_message %></p>
-    <% end %>
-    <h2>ログイン</h2>
-    <%= form_with(url: "/login") do |form| %>
-      <%= form.label :username, "ユーザー名:" %>
-      <%= form.text_field :username, id: "loginName", required: true, value: @login_username %>
-      <%= form.label :password, "パスワード:" %>
-      <%= form.password_field :password, id: "loginPass", required: true %>
-      <%= form.submit id: "loginButton", class: "button", value: "ログイン" %>
-    <% end %>
-  </div>
+    <div class="section" id="login-form">
+      <% if @login_error_message %>
+        <p class="font-error"><%= @login_error_message %></p>
+      <% end %>
+      <h2>ログイン</h2>
+      <%= form_with(url: "/login") do |form| %>
+        <%= form.label :username, "ユーザー名:" %>
+        <%= form.text_field :username, id: "loginName", required: true, value: @login_username %>
+        <%= form.label :password, "パスワード:" %>
+        <%= form.password_field :password, id: "loginPass", required: true %>
+        <%= form.submit id: "loginButton", class: "button", value: "ログイン" %>
+      <% end %>
+    </div>
 
-  <div class="section" id="signup-form">
-    <% if @signup_error_message %>
-      <p class="font-error"><%= @signup_error_message %></p>
-    <% end %>
-    <h2>新規登録はこちら</h2>
-    <%= form_with(url: "/signup") do |form| %> 
-      <%= form.label :newname, "新しいユーザー名:" %>
-      <!-- name="new-username"のようなスネークの命名にするとログインの入力フォームにも影響してエラーとなる -->
-      <%= form.text_field :newname, id: "newName", required: true,
-      placeholder: "12文字以下", value: @signup_username %>
-      <%= form.label :newpass, "新しいパスワード:" %>
-      <%= form.password_field :newpass, id: "newPass", required: true,
-      placeholder: "半角英数4～12文字以内" %>
-      <%= form.submit id: "signupButton", class: "button", value: "新規登録" %>
-    <% end %>
-  </div>
+    <div class="section" id="signup-form">
+      <% if @signup_error_message %>
+        <p class="font-error"><%= @signup_error_message %></p>
+      <% end %>
+      <h2>新規登録はこちら</h2>
+      <%= form_with(url: "/signup") do |form| %> 
+        <%= form.label :newname, "新しいユーザー名:" %>
+        <!-- name="new-username"のようなスネークの命名にするとログインの入力フォームにも影響してエラーとなる -->
+        <%= form.text_field :newname, id: "newName", required: true,
+        placeholder: "12文字以下", value: @signup_username %>
+        <%= form.label :newpass, "新しいパスワード:" %>
+        <%= form.password_field :newpass, id: "newPass", required: true,
+        placeholder: "半角英数4～12文字以内" %>
+        <%= form.submit id: "signupButton", class: "button", value: "新規登録" %>
+      <% end %>
+    </div>
 
-  <script type="module">
-    import "login_form";
-  </script>
-
+    <script type="module">
+      import "login_form";
+    </script>
+  <% end %>
 </div>
