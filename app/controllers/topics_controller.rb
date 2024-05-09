@@ -16,7 +16,7 @@ class TopicsController < ApplicationController
   def ensure_correct_user_by_user_id
     if @current_user
       session[:user_id] = nil
-      redirect_to("/TopicStock")
+      redirect_to("/")
     end
   end
 

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # ホームページ
-  get  "TopicStock" => "home#top"
+  get  "/" => "home#top"
   # メインページ
   get  "topics/stock" => "topics#stock"
   # 検索フォーム

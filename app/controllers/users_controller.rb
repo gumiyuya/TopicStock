@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   # ログアウト
   def logout
     session[:user_id] = nil
-    redirect_to("/TopicStock")
+    redirect_to("/")
   end
 
   # ユーザーのホームページ
@@ -52,11 +52,11 @@ class UsersController < ApplicationController
 
   # ユーザーのストックページ
   def stock
-    @topic = Topic.find_by(id: params[:topic_id])
+    topics = Topic.where(user_id: @user.id)
+    @topic = topics.find_by(id: params[:topic_id])
     if @topic
       @connections = Connection.where(topic_id: @topic.id)
     else
-      topics = Topic.where(user_id: @user.id)
       @topic = topics[rand(topics.size)]
       if !@topic
         @not_yet_error_message = "まだトピックをストックしていません"
@@ -183,16 +183,16 @@ class UsersController < ApplicationController
   def ensure_correct_user_by_user_id
     @user = User.find_by(id: params[:id])
     if @user == nil || !@current_user
-      redirect_to("/TopicStock")
+      redirect_to("/")
     elsif @user.id != @current_user.id
       session[:user_id] = nil
-      redirect_to("/TopicStock")
+      redirect_to("/")
     end
   end
   def ensure_correct_user_by_topic_id
     @topic = Topic.find_by(id: params[:id])
     if @current_user == nil
-      redirect_to("/TopicStock")
+      redirect_to("/")
     elsif @topic == nil || @topic.user_id != @current_user.id
       redirect_to("/users/#{@current_user.id}")
     end
