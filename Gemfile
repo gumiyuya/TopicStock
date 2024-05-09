@@ -72,3 +72,4 @@ end
 
 gem 'sassc-rails'
 gem 'font-awesome-rails'
+gem 'bcrypt'
