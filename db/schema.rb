@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_09_153059) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_09_152030) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "connections", force: :cascade do |t|
     t.integer "topic_id"
     t.integer "similar_topic_id"

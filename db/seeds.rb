@@ -1,6 +1,6 @@
 User.create!(
   id: 1,
   name: "tamam",
-  password: "kamiko0909",
-  password_confirmation: "kamiko0909"
+  password: ENV['TAMAM_PASSWORD'],
+  password_confirmation: ENV['TAMAM_PASSWORD']
 )
