@@ -21,13 +21,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_09_152030) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "similar_topics", force: :cascade do |t|
-    t.string "content"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "topics", force: :cascade do |t|
     t.string "content"
     t.datetime "created_at", null: false

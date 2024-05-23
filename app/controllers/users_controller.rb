@@ -73,8 +73,7 @@ class UsersController < ApplicationController
   # 話題の新規ストック
   def create
     @topic = Topic.new(content: params[:content], user_id: @current_user.id)
-    @similar_topic = SimilarTopic.new(content: params[:content], user_id: @current_user.id)
-    if @topic.save && @similar_topic.save
+    if @topic.save
       redirect_to("/users/#{@topic.id}/edit")
     else
       @existing_error_message = "そのトピックは既にストックしています"
@@ -89,13 +88,11 @@ class UsersController < ApplicationController
   # 話題の編集
   def update
     if Topic.exists?(content: params[:content], user_id: @current_user.id)
-      # topic,similar_topicの保存に失敗した場合の処理
+      # topicの保存に失敗した場合の処理
       @existing_error_message = "そのトピックは既にストックしています"
       render("users/edit", status: :unprocessable_entity)
     else
-      similar_topic = SimilarTopic.find_by(id: params[:id])
       @topic.update(content: params[:content])
-      similar_topic.update(content: params[:content])
       render("users/stock", status: :unprocessable_entity)
     end
   end
@@ -104,14 +101,12 @@ class UsersController < ApplicationController
   def s_update
     # テキストエリアを全く変えずに編集ボタンを押す、
     # 登録済の類題を編集によって紐づけようとする、などはエラーとする
-    if SimilarTopic.exists?(content: params[:content], user_id: @current_user.id)
+    if Topic.exists?(content: params[:content], user_id: @current_user.id)
       @existing_error_message = "登録済のトピックを紐づけるにはストックしてください"
       render("users/edit", status: :unprocessable_entity)
     else # 編集後の内容が未登録なら編集を完了させる
       topic = Topic.find_by(id: params[:similar_topic_id])
-      similar_topic = SimilarTopic.find_by(id: params[:similar_topic_id])
       topic.update(content: params[:content])
-      similar_topic.update(content: params[:content])
       render("users/stock", status: :unprocessable_entity)
     end
   end
@@ -119,7 +114,7 @@ class UsersController < ApplicationController
   # 類題の新規ストック
   def s_create
     # 新規登録した類題が既にDBに存在し、
-    if existing_similar_topic = SimilarTopic.find_by(
+    if existing_similar_topic = Topic.find_by(
         content: params[:content],
         user_id: @current_user.id
       )
@@ -148,9 +143,8 @@ class UsersController < ApplicationController
       end
     else # 新規登録した類題がまだDBに存在しないならDBへの追加も行う
       topic = Topic.create(content: params[:content], user_id: @current_user.id)
-      similar_topic = SimilarTopic.create(content: params[:content], user_id: @current_user.id)
-      connection1 = Connection.create(topic_id: params[:id], similar_topic_id: similar_topic.id)
-      connection2 = Connection.create(topic_id: similar_topic.id, similar_topic_id: params[:id])
+      connection1 = Connection.create(topic_id: params[:id], similar_topic_id: topic.id)
+      connection2 = Connection.create(topic_id: topic.id, similar_topic_id: params[:id])
       render("users/stock", status: :unprocessable_entity)
     end
   end
@@ -162,7 +156,6 @@ class UsersController < ApplicationController
   # 話題の削除
   def destroy
     topic = Topic.find_by(id: params[:id]).destroy
-    similar_topic = SimilarTopic.find_by(id: params[:id]).destroy
     redirect_to("/users/#{@current_user.id}/stock")
   end
 

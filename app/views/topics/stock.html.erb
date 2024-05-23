@@ -9,7 +9,7 @@
       <!-- 1.ランダムで表示される話題に紐づく中間データを全て取り出す -->
       <% @connections.each do |connection| %>
         <!-- 2.取り出した中間データに紐づく類題を、similar_topicsに全て代入する -->
-        <% similar_topics = SimilarTopic.where(id: connection.similar_topic_id) %>
+        <% similar_topics = Topic.where(id: connection.similar_topic_id) %>
         <!-- 3.代入した類題を全て取り出す -->
         <% similar_topics.each do |similar_topic| %>
           <div class="small-box">
