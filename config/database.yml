@@ -86,3 +86,17 @@ production:
   database: topic_stock_production
   username: topic_stock
   password: <%= ENV["TOPIC_STOCK_DATABASE_PASSWORD"] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: topic-stock-test.internal
+  port: 5432
+
+# Postgres cluster topic-stock-test created
+#  Username:    postgres
+#  Password:    2b2Y6neIN7LJ03W
+#  Hostname:    topic-stock-test.internal
+#  Flycast:     fdaa:9:39f9:0:1::2
+#  Proxy port:  5432
+#  Postgres port:  5433
+#  Connection string: postgres://postgres:2b2Y6neIN7LJ03W@topic-stock-test.flycast:5432
