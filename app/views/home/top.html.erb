@@ -1,18 +1,23 @@
-<%= turbo_frame_tag "topic-boxes" do %>
-  <div class="top-container">
-    <div class="top-text-box">
-      <p>
-      雑談上手な人はある話題からある話題を連想
-      し、話し続けたり、時には質問を投げかけた
-      りして、途切れないような会話の展開作りを
-      しているといいます。更に、会話のプロはそ
-      んな話題の数々をいくつも紐づけながら、予
-      め脳内に蓄えているそうです。<br>
-      あなたもトピックストックを使って、いざと
-      いう時のために頭の中に会話ネタをストック
-      しておきましょう！
-      </p>
-    </div>
-    <%= link_to("スタート", "/topics/stock", class: "start-btn") %>
+<div class="top-container">
+  <div class="top-text-box">
+    <p>
+    雑談上手な人はある話題からある話題を連想
+    し、話し続けたり、時には質問を投げかけた
+    りして、途切れないような会話の展開作りを
+    しているといいます。更に、会話のプロはそ
+    んな話題の数々をいくつも紐づけながら、予
+    め脳内に蓄えているそうです。<br>
+    あなたもトピックストックを使って、いざと
+    いう時のために頭の中に会話ネタをストック
+    しておきましょう！
+    </p>
   </div>
-<% end %>
+  <%= link_to("スタート", "/topics/stock", class: "start-btn") %>
+  <div class="content">
+    <i class="fas fa-search"></i>
+    <%= form_with(url: "/search", method: :get) do |f| %>
+      <%= f.text_field :keyword, class: "search-field", required: true,
+      placeholder: "トピックを検索" %>
+    <% end %>
+  </div>
+</div>

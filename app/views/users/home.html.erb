@@ -12,7 +12,7 @@
         </div>
         <div class="content">
           <i class="fas fa-search"></i>
-          <%= form_with(url: "/search", method: :get) do |f| %>
+          <%= form_with(url: "/user_search", method: :get) do |f| %>
             <%= f.text_field :keyword, class: "search-field", required: true,
             placeholder: "トピックを検索" %>
           <% end %>

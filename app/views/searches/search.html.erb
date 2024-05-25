@@ -1,27 +1,18 @@
-<%= turbo_frame_tag "topic_boxes" do %>
-  <div class="searchs-container">
+<div class="searchs-container">
 
-    <% if @topics.present? && @topics != Topic.all %>
-      <div class="small-boxes">
-        <% @topics.each do |topic| %>
-          <%= button_to(
-            topic.content, "/users/#{@current_user.id}/stock",
-            {method: :get, params: {id: @current_user.id, topic_id: topic.id}, class: "button"}
-          ) %>
-        <% end %>
-      </div>
-    <%else%>
-      <% if @error_message %>
-        <p class="font-error"><%= @error_message %></p>
-      <% end %>
+  <div class="small-boxes">
+    <% @topics.each do |topic| %>
+      <%= button_to(
+        topic.content, "/topics/stock",
+        {method: :get, params: {id: 1, topic_id: topic.id}, class: "button"}
+      ) %>
     <% end %>
-
-    <%= button_to(
-      "/users/#{@current_user.id}",
-      {method: :get, class: "back"}
-    ) do %>
-      <i class="fa fa-arrow-left"></i>
-    <% end %>
-
   </div>
-<% end %>
+
+  <%= button_to(
+    "/", {method: :get, class: "back"}
+  ) do %>
+    <i class="fa fa-arrow-left"></i>
+  <% end %>
+
+</div>
