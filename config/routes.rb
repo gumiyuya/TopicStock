@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post "logout" => "users#logout"
   # ユーザーのホームページ idはユーザーのid
   get  "users/:id" => "users#home"
+  get  "users/:id/index" => "users#index"
   get  "users/:id/stock" => "users#stock"
   get  "users/:id/new" => "users#new"
   post "users/:id/create" => "users#create"

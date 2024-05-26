@@ -4,7 +4,7 @@
     <%= form_with(
       url: "/users/#{@topic.id}/destroy",
       data: {turbo_confirm: "他のトピックとの紐づきも削除されます。削除してよろしいですか？"}
-      ) do |form| %>
+    ) do |form| %>
       <div class="big-box">
         <%= form.text_area :content, class: "big-text", required: true,
         size: "20x4", maxlength: 40, value: @topic.content, readonly: true %>

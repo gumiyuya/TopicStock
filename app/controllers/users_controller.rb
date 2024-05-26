@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :ensure_correct_user_by_user_id, {
-    only: [:home, :stock, :new, :create]
+    only: [:home, :index, :stock, :new, :create]
   }
   before_action :ensure_correct_user_by_topic_id, {
     only: [:edit, :update, :s_update, :s_create, :delete, :destroy, :s_destroy]
@@ -48,6 +48,17 @@ class UsersController < ApplicationController
   # ユーザーのホームページ
   def home
     @topic_count = Topic.where(user_id: @current_user.id).count || 0
+  end
+
+  # ユーザーのストック一覧ページ
+  def index
+    @topics = Topic.where(user_id: @current_user.id)
+    if @topics.nil?
+      @error_message = "トピックが見つかりませんでした" 
+    else
+      @topics.count == 0
+      @error_message = "トピックが見つかりませんでした"
+    end
   end
 
   # ユーザーのストックページ

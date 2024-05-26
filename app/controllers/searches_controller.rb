@@ -1,4 +1,10 @@
 class SearchesController < ApplicationController
+  before_action :ensure_correct_user1, {
+    only: [:search]
+  }
+  before_action :ensure_correct_user2, {
+    only: [:user_search]
+  }
 
   def search
     # 空白で区切りand検索できるようにする
@@ -29,6 +35,18 @@ class SearchesController < ApplicationController
     else
       @topics.count == 0
       @error_message = "トピックが見つかりませんでした"
+    end
+  end
+
+  # アクセス制限
+  def ensure_correct_user1
+    if @current_user
+      redirect_to("/users/#{@current_user.id}")
+    end
+  end
+  def ensure_correct_user2
+    if !@current_user
+      redirect_to("/")
     end
   end
 

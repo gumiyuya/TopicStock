@@ -201,6 +201,9 @@
         width: 100%;
         padding: 10px;
         font-size: 16px;
+        .topic-count {
+          text-decoration: underline;
+        }
         form input {
           font-size: 14px;
         }

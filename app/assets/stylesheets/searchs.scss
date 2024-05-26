@@ -80,7 +80,12 @@
   }
 }
 
-.searchs-container {
+/*searches/search,
+ *searches/user_search,
+ *users/index
+ */
+.searchs-container,
+.users-index-container {
   @include container;
   @include center_column;
   position: relative;
