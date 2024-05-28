@@ -1,4 +1,5 @@
 <div class="top-container">
+
   <div class="top-text-box">
     <p>
     雑談上手な人はある話題からある話題を連想
@@ -12,7 +13,9 @@
     しておきましょう！
     </p>
   </div>
+
   <%= link_to("スタート", "/topics/stock", class: "start-btn") %>
+
   <div class="content">
     <i class="fas fa-search"></i>
     <%= form_with(url: "/search", method: :get) do |f| %>
@@ -20,4 +23,23 @@
       placeholder: "トピックを検索" %>
     <% end %>
   </div>
+
+  <div class="top-help-box">会員登録で以下の機能がご利用いただけます。
+    <ul>
+      <li>
+        <i class="fa fa-plus-square"></i>
+        <span>トピックの新規ストック</span>
+      </li>
+      <li>
+        <i class="fa fa-pencil-square"></i>
+        <span>トピックの編集</span>
+      </li>
+      <li>
+        <i class="fa fa-th-list"></i>
+        <span>ストックしたトピック一覧の閲覧</span>
+      </li>
+    </ul>
+  </div>
+
+  <%= link_to("会員登録はこちら", "/login_form", class: "signup-link")%>
 </div>

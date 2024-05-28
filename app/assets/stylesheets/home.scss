@@ -11,7 +11,7 @@
 
 @mixin home_box {
   width: 320px;
-  padding: 20px;
+  padding: 10px 20px;
   margin: 0 auto 10px auto;
   display: flex;
   align-items: center;
@@ -167,9 +167,9 @@ body {
 
 /*home/top*/
 .top-container {
-  margin-top: 110px;
+  margin-top: 80px;
   @include sp {
-    margin-top: 80px;
+    margin-top: 70px;
   }
   text-align: center;
   color: white;
@@ -210,6 +210,55 @@ body {
       width: 220px;
       margin-right: 20px;
       font-size: 16px;
+    }
+  }
+  .top-help-box {
+    padding: 10px 20px;
+    margin: 30px auto 0 auto;
+    font-size: 87.5%;
+    color: black;
+    ul {
+      width: 320px;
+      padding: 0;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      list-style: none;
+      li {
+        width: 80%;
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr 6fr;
+        text-align: left;
+        border-bottom: 1px solid darkorange;
+      }
+      .fa {
+        margin: auto;
+        font-family: FontAwesome;
+      }
+      .header-caption {
+        margin-left: 10px;
+        font-size: 16px;
+      }
+    }
+  }
+  .signup-link {
+    width: 160px;
+    height: 30px;
+    padding: auto 10px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background-color: darkorange;
+    border-radius: 50px;
+    transition: transform 0.3s ease;
+    @include pc {
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 }
