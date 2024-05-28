@@ -221,6 +221,7 @@ class UsersController < ApplicationController
   # 話題の削除
   def destroy
     topic = Topic.find_by(id: params[:id]).destroy
+    connection = Connection.where(similar_topic_id: params[:id]).destroy_all
     redirect_to("/users/#{@current_user.id}/stock")
   end
 
