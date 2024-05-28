@@ -1,0 +1,39 @@
+<div class="users-bulk_create_form-container">
+  <% if @existing_topic %>
+    <p class="font-error">話題の一括生成ができない状態です</p>
+  <%else%>
+
+    <%= form_with(
+      url: "/users/#{@current_user.id}/bulk_create",
+      data: {turbo_confirm: "以下の52個の話題を一括作成します。よろしいですか？"}
+    ) do |form| %>
+      <div class="bulk-create-btn">
+        <%= form.submit class: "button", value: "話題一括作成" %>
+      </div>
+    <% end %>
+
+    <div class="small-boxes">
+      <% @topics.each do |topic| %>
+        <div class="small-box">
+          <p><%= topic.content %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <%= form_with(
+      url: "/users/#{@current_user.id}/bulk_create",
+      data: {turbo_confirm: "以上の52個の話題を一括作成します。よろしいですか？"}
+    ) do |form| %>
+      <div class="bulk-create-btn">
+        <%= form.submit class: "button", value: "話題一括作成" %>
+      </div>
+    <% end %>
+
+    <%= button_to(
+      "/users/#{@current_user.id}", {method: :get, class: "back"}
+    ) do %>
+      <i class="fa fa-arrow-left"></i>
+    <% end %>
+
+  <% end %>
+</div>

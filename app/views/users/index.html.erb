@@ -11,15 +11,7 @@
         <% end %>
       </div>
     <%else%>
-      <% if @error_message %>
-        <p class="font-error"><%= @error_message %></p>
-      <% end %>
-    <% end %>
-
-    <%= button_to(
-      "/users/#{@current_user.id}", {method: :get, class: "back"}
-    ) do %>
-      <i class="fa fa-arrow-left"></i>
+      <p class="font-error"><%= @error_message %></p>
     <% end %>
 
   </div>

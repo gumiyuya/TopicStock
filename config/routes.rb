@@ -13,10 +13,12 @@ Rails.application.routes.draw do
   post "logout" => "users#logout"
   # ユーザーのホームページ idはユーザーのid
   get  "users/:id" => "users#home"
-  get  "users/:id/index" => "users#index"
   get  "users/:id/stock" => "users#stock"
   get  "users/:id/new" => "users#new"
   post "users/:id/create" => "users#create"
+  get  "users/:id/index" => "users#index"
+  get  "users/:id/bulk_create_form" => "users#bulk_create_form"
+  post "users/:id/bulk_create" => "users#bulk_create"
   # 編集ページ idはトピックのid
   get  "users/:id/edit" => "users#edit"
   post "users/:id/update" =>"users#update"

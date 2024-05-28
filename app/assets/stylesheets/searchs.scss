@@ -84,10 +84,10 @@
  *searches/user_search,
  *users/index
  */
-.searchs-container,
-.users-index-container {
+.searchs-container {
   @include container;
   @include center_column;
+  margin-bottom: 60px;
   position: relative;
   .font-error {
     @include font_error(0, 0 auto, 15px);
@@ -96,14 +96,14 @@
     @include small_boxs;
     .button {
       @include small_box(100px);
-      border: 0px solid;
-      cursor: pointer;
-      transition: transform 0.3s ease;
       @include break_word(18px);
       @include sp {
         @include break_word(16px);
       }
       line-height: 105%;
+      border: 0px solid;
+      cursor: pointer;
+      transition: transform 0.3s ease;
       @include pc {
         &:hover {
           transform: scale(1.09);

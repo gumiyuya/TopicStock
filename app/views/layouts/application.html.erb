@@ -22,7 +22,7 @@
   </head>
   <body>
 
-    <div class="header" data-turbo="false">
+    <div class="header">
       <div class="header-title">
         <% if @current_user %>
           <%= link_to("トピックストック", "/users/#{@current_user.id}") %>
@@ -30,31 +30,61 @@
           <%= link_to("トピックストック", "/") %>
         <% end %>
       </div>
-      <div class="header-links">
-        <% if @current_user %>
-          <%= link_to(
-            @current_user.name, "/users/#{@current_user.id}", class: "pc-header-links"
-          ) %>
-          <%= link_to(
-            "ログアウト", "/logout", class: "pc-header-links",
-            data: {turbo: true, turbo_method: "post"}
-          ) %>
-          <%= link_to(
-            "/logout", class: "sp-header-links",
-            data: {turbo: true, turbo_method: "post"}
-          ) do %>
-            <i class="fa fa-sign-out"></i>
-            <span class="header-caption">ログアウト</span>
-          <% end %>
-        <% else %>
-          <%= link_to("ログイン", "/login_form", class: "pc-header-links") %>
-          <%= link_to("/login_form", class: "sp-header-links") do %>
-            <i class="fa fa-sign-in"></i>
-            <span class="header-caption">ログイン</span>
-          <% end %>
-        <% end %>
+
+      <div id="navArea">
+        <nav>
+          <div class="header-links">
+            <ul>
+              <% if @current_user %>
+                <li>
+                  <%= link_to("/users/#{@current_user.id}") do %>
+                    <i class="fa fa-home"></i>
+                    <span class="header-caption">ホーム</span>
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to("/users/#{@current_user.id}/index") do %>
+                    <i class="fa fa-th-list"></i>
+                    <span class="header-caption">話題一覧</span>
+                  <% end %>
+                </li>
+                <% if !@existing_topic %>
+                  <li>
+                    <%= link_to("/users/#{@current_user.id}/bulk_create_form") do %>
+                      <i class="fa fa-plus-square"></i>
+                      <span class="header-caption">話題一括作成</span>
+                    <% end %>
+                  </li>
+                <% end %>
+                <li>
+                  <%= link_to("/logout",data: {turbo: true, turbo_method: "post"}) do %>
+                    <i class="fa fa-sign-out"></i>
+                    <span class="header-caption">ログアウト</span>
+                  <% end %>
+                </li>
+              <% else %>
+                <li>
+                  <%= link_to("/login_form") do %>
+                    <i class="fa fa-sign-in"></i>
+                    <span class="header-caption">ログイン</span>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </nav>
+        <div id="mask"></div>
       </div>
+
+      <div class="cog-btn">
+        <i class="fa fa-cog"></i>
+      </div>
+
     </div>
+
+    <script type="module">
+      import "header_menu";
+    </script>
 
     <%= yield %>
 

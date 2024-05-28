@@ -24,10 +24,10 @@
   line-height: 80px;
   padding: 0 20px;
   margin: 0 auto;
+  display: inline-block;
   font-size: 32px;
   background-color: darkorange;
   border-radius: 50px;
-  display: inline-block;
 }
 
 body {
@@ -35,10 +35,8 @@ body {
   .header {
     width: 100%;
     height: 50px;
-    padding: 10px;
     @include sp {
       height: 40px;
-      padding: 5px;
     }
     position: fixed;
     top: 0;
@@ -47,51 +45,121 @@ body {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    @include sp {
-      justify-content: center;
+    @include pc {
+      justify-content: space-between;
     }
     background-color: darkorange;
-    a {
-      text-decoration: none;
-      color: white;
-    }
     .header-title {
-      font-weight: bold;
-      font-size: 20px;
       @include sp {
-        font-size: 18px;
+        margin: 0 auto;
+      }
+      a {
+        padding: 15px;
+        font-size: 20px;
+        @include sp {
+          padding: 10px;
+          font-size: 18px;
+        }
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
       }
     }
-    .header-links {
-      font-size: 16px;
-      @include pc {
-        a:not(:first-child) {
-          margin-left: 20px;
+    nav {
+      width: 200px;
+      position: fixed;
+      top: 0;
+      right: -300px;
+      bottom: 0;
+      z-index: 3;
+      display: block;
+      background-color: darkorange;
+      transition: all 0.3s;
+      opacity: 0;
+      .header-links {
+        margin-top: 50px;
+        @include sp {
+          margin-top: 40px;
         }
-        .sp-header-links {
-          display: none;
+        font-size: 16px;
+        ul {
+          padding: 0;
+          margin: 0;
+          list-style: none;
+          li {
+            margin: 0;
+            border-bottom: 1px solid white;
+            a {
+              padding: 1rem 1rem 1rem 0;
+              display: grid;
+              grid-template-columns: 1fr 2fr;
+              color: white;
+              text-decoration: none;
+              transition-duration: 0.5s;
+              &:hover {
+                background-color: #ffb52a;
+              }
+            }
+            .fa {
+              margin: auto;
+              font-size: 22px;
+              font-family: FontAwesome;
+            }
+            .header-caption {
+              margin-left: 10px;
+              font-size: 16px;
+            }
+          }
         }
       }
+    }
+    #mask {
+      display: none;
+      transition: all 0.5s;
+    }
+    .cog-btn {
+      padding: 10px 15px;
       @include sp {
         position: absolute;
-        right: 10px;
-        .sp-header-links {
-          display: flex;
-          align-items: center;
-          flex-direction: column;
-          justify-content: center;
-          .fa {
-            font-size: 25px;
-            font-family: FontAwesome;
-          }
-          .header-caption {
-            font-size: 9px;
-          }
+        top: 0%;
+        right: 0%;
+      }
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      z-index: 4;
+      cursor: pointer;
+      &:active {
+        animation-duration: 1.2s;
+        animation-timing-function: linear;
+        animation-name: fa-spin;
+      }
+      .fa {
+        font-size: 28px;
+        font-family: FontAwesome;
+        @include sp {
+          font-size: 22px;
         }
-        .pc-header-links {
-          display: none;
-        }
+      }
+    }
+    // .cog-btnをクリックしたときに付与されるクラス.open
+    .open {
+      nav {
+        right: 0;
+        opacity: 1;
+      }
+      #mask {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        display: block;
+        background-color: black;
+        opacity: 0.5;
+        cursor: pointer;
       }
     }
   }

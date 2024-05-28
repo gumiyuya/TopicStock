@@ -41,8 +41,8 @@
   color: darkorange;
   background-color: white;
 }
-@mixin container {
-  margin-top: 110px;
+@mixin container($marginTop: 110px) {
+  margin-top: $marginTop;
   @include sp {
     margin-top: 80px;
   }
@@ -188,18 +188,21 @@
     border-radius: 20px;
     p {
       padding: 10px;
-      margin-right: 30px;
-    }
-    i {
       margin-right: 10px;
-      display: inline;
+      i {
+        margin-right: 10px;
+        display: inline;
+      }
     }
     .contents {
       width: 260px;
       .content {
-        @include vertical_center;
         width: 100%;
         padding: 10px;
+        display: grid;
+        grid-template-columns: 1fr 6fr;
+        align-items: center;
+        text-align: left;
         font-size: 16px;
         .topic-count {
           text-decoration: underline;
@@ -305,6 +308,72 @@
   }
 }
 
+/*users/index*/
+.users-index-container {
+  @include container;
+  @include center_column;
+  margin-bottom: 60px;
+  position: relative;
+  .font-error {
+    @include font_error(0, 0 auto, 15px);
+  }
+  .small-boxes {
+    @include small_boxs;
+    .button {
+      @include small_box(100px);
+      @include break_word(18px);
+      @include sp {
+        @include break_word(16px);
+      }
+      line-height: 105%;
+      border: 0px solid;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      @include pc {
+        &:hover {
+          transform: scale(1.09);
+          background-color: rgb(255, 170, 34);
+        }
+      }
+    }
+  }
+  .back {
+    @include turbo_btn;
+  }
+}
+
+/*users/bulk_create_form*/
+.users-bulk_create_form-container {
+  @include container(60px);
+  @include center_column;
+  position: relative;
+  .font-error {
+    @include font_error(0, 0 auto, 15px);
+  }
+  .button {
+    @include btn(200px, 60px, 30px, rgb(255, 159, 239));
+    @include form_btn;
+    margin: 20px 0;
+    color: white;
+  }
+  .small-boxes {
+    @include small_boxs;
+    .small-box {
+      @include small_box(100px);
+      border: 0px solid;
+      @include break_word(18px);
+      @include sp {
+        @include break_word(16px);
+      }
+      line-height: 105%;
+    }
+  }
+  .back {
+    @include turbo_btn;
+    margin-bottom: 20px;
+  }
+}
+
 /*users/edit*/
 .users-edit-container {
   @include container;
@@ -340,15 +409,17 @@
 .users-delete-container {
   @include container;
   @include center_column;
-  .button {
-    @include form_btn;
-    @include color_group_mirror;
-  }
   .big-box {
     @include big_box;
     .big-text {
       @include big_text;
-      cursor: default;
+      margin: auto;
+    }
+    .button {
+      @include form_btn;
+      @include color_group_mirror;
+      margin-top: auto;
+      margin-bottom: 10px;
     }
   }
   .small-boxes {
@@ -357,7 +428,13 @@
       @include small_box(120px);
       .small-text {
         @include small_text;
-        cursor: default;
+        margin: auto;
+      }
+      .button {
+        @include form_btn;
+        @include color_group_mirror;
+        margin-top: auto;
+        margin-bottom: 5px;
       }
     }
   }
