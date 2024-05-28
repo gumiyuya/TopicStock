@@ -2,7 +2,7 @@
   <div class="users-delete-container">
 
       <%= form_with(
-        url: "/users/#{@topic.id}/destroy",
+        url: "/users/#{@topic.id}/destroy", class: "big-box-from",
         data: {turbo_confirm: "他のトピックとの紐づきも削除されます。削除してよろしいですか？"}
       ) do |form| %>
         <div class="big-box">

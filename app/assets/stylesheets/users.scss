@@ -409,17 +409,20 @@
 .users-delete-container {
   @include container;
   @include center_column;
-  .big-box {
-    @include big_box;
-    .big-text {
-      @include big_text;
-      margin: auto;
-    }
-    .button {
-      @include form_btn;
-      @include color_group_mirror;
-      margin-top: auto;
-      margin-bottom: 10px;
+  .big-box-from {
+    width: 100%;
+    .big-box {
+      @include big_box;
+      .big-text {
+        @include big_text;
+        margin: auto;
+      }
+      .button {
+        @include form_btn;
+        @include color_group_mirror;
+        margin-top: auto;
+        margin-bottom: 10px;
+      }
     }
   }
   .small-boxes {
