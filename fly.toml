@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for topic-stock on 2024-05-25T03:04:45+09:00
+# fly.toml app configuration file generated for topic-stock on 2024-05-29T02:31:13+09:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'topic-stock'
-primary_region = 'hkg'
+primary_region = 'nrt'
 console_command = '/rails/bin/rails console'
 
 [build]
