@@ -19,3 +19,4 @@ https://topic-stock.fly.dev/
 - ストックした話題に関連する話題を紐づける機能（個人で入力することで自動で紐づくようにする。6 つまで。）
 
 ## ER 図
+![topic_stock_table drawio](https://github.com/gumiyuya/TopicStock/assets/157386356/5080e95a-eb7d-4380-aa2c-f111f2fb7d8a)
