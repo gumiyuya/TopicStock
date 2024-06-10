@@ -150,7 +150,10 @@ class UsersController < ApplicationController
   # ユーザー削除
   def delete
     user = User.find_by(name: params[:username])
-    if user && user.authenticate(params[:password]) && user == @current_user
+    if user.id == 1
+      @delete_error_message = "ユーザー名またはパスワードが間違っています"
+      render("users/delete_form", status: :unprocessable_entity)
+    elsif user && user.authenticate(params[:password]) && user == @current_user
       user = @user.destroy
       redirect_to("/")
     else
