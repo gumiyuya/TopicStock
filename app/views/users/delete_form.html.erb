@@ -1,0 +1,6 @@
+<div class="delete-account-form">
+  <p>こちらはアカウントを削除するページです。<br>お間違いなければボタンを押して下さい。</p>
+  <%= form_with(url: "/users/#{@current_user.id}/delete") do |form| %>
+    <%= form.submit class: "button", value: "アカウント削除" %>
+  <% end %>
+</div>

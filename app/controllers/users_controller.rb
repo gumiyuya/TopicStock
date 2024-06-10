@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   before_action :ensure_correct_user_by_user_id, {
-    only: [:home, :index, :stock, :new, :create, :bulk_create_form, :bulk_create]
+    only: [
+      :home, :stock, :new, :create, :index,
+      :bulk_create_form, :bulk_create, :delete_form, :delete
+    ]
   }
 
   # ログインページ
@@ -138,6 +141,16 @@ class UsersController < ApplicationController
       end
       redirect_to("/users/#{@current_user.id}")
     end
+  end
+
+  # ユーザー削除フォーム
+  def delete_form
+  end
+
+  # ユーザー削除
+  def delete
+    user = @user.destroy
+    redirect_to("/")
   end
 
   # アクセス制限
