@@ -5,6 +5,7 @@ class Topic < ApplicationRecord
     format: { without: /\n/ }
   }
   validates :user_id, uniqueness: { scope: :content }
+  belongs_to :user
   has_many :connections, dependent: :destroy
 
   validate :not_blank
