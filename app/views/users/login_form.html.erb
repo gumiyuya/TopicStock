@@ -21,7 +21,7 @@
       <% if @signup_error_message %>
         <p class="font-error"><%= @signup_error_message %></p>
       <% end %>
-      <h2>新規登録はこちら</h2>
+      <h2>アカウント作成はこちら</h2>
       <%= form_with(url: "/signup") do |form| %> 
         <%= form.label :newname, "新しいユーザー名:" %>
         <!-- name="new-username"のようなスネークの命名にするとログインの入力フォームにも影響してエラーとなる -->
@@ -30,7 +30,7 @@
         <%= form.label :newpass, "新しいパスワード:" %>
         <%= form.password_field :newpass, id: "newPass", required: true,
         placeholder: "半角英数4～12文字以内" %>
-        <%= form.submit id: "signupButton", class: "button", value: "新規登録" %>
+        <%= form.submit id: "signupButton", class: "button", value: "アカウント作成" %>
       <% end %>
     </div>
 
