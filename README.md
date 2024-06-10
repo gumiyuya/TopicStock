@@ -20,3 +20,6 @@ https://topic-stock.fly.dev/
 
 ## ER 図
 ![topic_stock_table drawio](https://github.com/gumiyuya/TopicStock/assets/157386356/5080e95a-eb7d-4380-aa2c-f111f2fb7d8a)
+
+## 使い方
+![read_me_topic1](https://github.com/gumiyuya/TopicStock/assets/157386356/4685adcf-cffc-4dd3-8d79-f21b867ecba1)
