@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get  "users/:id/index" => "users#index"
   get  "users/:id/bulk_create_form" => "users#bulk_create_form"
   post "users/:id/bulk_create" => "users#bulk_create"
+  get  "users/:id/delete_form" => "users#delete_form"
+  post "users/:id/delete" => "users#delete"
   # 編集ページ idはトピックのid
   get  "users/:id/edit" => "topics#edit"
   post "users/:id/update" =>"topics#update"

@@ -374,7 +374,18 @@
   }
 }
 
-/*users/edit*/
+/*users/delete_form*/
+.delete-account-form {
+  width: 100%;
+  margin: 80px auto 0 auto;
+  text-align: center;
+  .button {
+    @include form_btn;
+    @include color_group;
+  }
+}
+
+/*topics/edit*/
 .users-edit-container {
   @include container;
   @include center_column;
@@ -405,7 +416,7 @@
   }
 }
 
-/*users/delete*/
+/*topics/delete*/
 .users-delete-container {
   @include container;
   @include center_column;
