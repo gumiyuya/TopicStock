@@ -380,9 +380,21 @@
   width: 100%;
   margin: 80px auto 0 auto;
   text-align: center;
-  .button {
-    @include form_btn;
-    @include color_group;
+  position: relative;
+  .font-error {
+    @include font_error(50px, -50%, 15px);
+  }
+  form {
+    @include center_column;
+    label,
+    input {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .button {
+      @include form_btn;
+      @include color_group;
+    }
   }
 }
 

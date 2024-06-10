@@ -1,6 +1,16 @@
 <div class="delete-account-form">
-  <p>こちらはアカウントを削除するページです。<br>お間違いなければボタンを押して下さい。</p>
+  <% if @delete_error_message %>
+    <p class="font-error"><%= @delete_error_message %></p>
+  <% end %>
+
+  <p>アカウントを削除するページです。<br>
+  ユーザー名とパスワードを入力し<br>
+  ボタンを押して下さい。</p>
   <%= form_with(url: "/users/#{@current_user.id}/delete") do |form| %>
+    <%= form.label :username, "ユーザー名:" %>
+    <%= form.text_field :username, required: true%>
+    <%= form.label :password, "パスワード:" %>
+    <%= form.password_field :password, required: true %>
     <%= form.submit class: "button", value: "アカウント削除" %>
   <% end %>
 </div>
