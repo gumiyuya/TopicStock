@@ -28,7 +28,7 @@ class TopicsController < ApplicationController
     if Topic.exists?(content: params[:content], user_id: @current_user.id)
       # topicの保存に失敗した場合の処理
       @existing_error_message = "そのトピックは既にストックしています"
-      render("users/edit", status: :unprocessable_entity)
+      render("topics/edit", status: :unprocessable_entity)
     else
       @topic.update(content: params[:content])
       render("users/stock", status: :unprocessable_entity)
@@ -41,7 +41,7 @@ class TopicsController < ApplicationController
     # 登録済の類題を編集によって紐づけようとする、などはエラーとする
     if Topic.exists?(content: params[:content], user_id: @current_user.id)
       @existing_error_message = "登録済のトピックを紐づけるにはストックしてください"
-      render("users/edit", status: :unprocessable_entity)
+      render("topics/edit", status: :unprocessable_entity)
     else # 編集後の内容が未登録なら編集を完了させる
       topic = Topic.find_by(id: params[:similar_topic_id])
       topic.update(content: params[:content])
@@ -59,15 +59,15 @@ class TopicsController < ApplicationController
       # 既に紐づいているならエラー
       if Connection.exists?(topic_id: params[:id], similar_topic_id: existing_similar_topic.id)
         @existing_error_message = "既に紐づいたトピックです"
-        render("users/edit", status: :unprocessable_entity)
+        render("topics/edit", status: :unprocessable_entity)
         # 紐づきが既に6つ以上あるならエラー
       elsif Connection.where(topic_id: existing_similar_topic.id).size > 5
         @existing_error_message = "1つのトピックに紐づけられるトピックは6つまでです"
-        render("users/edit", status: :unprocessable_entity)
+        render("topics/edit", status: :unprocessable_entity)
         # 同じ話題同士を紐づけようとしたらエラー
       elsif @topic.id == existing_similar_topic.id
         @existing_error_message = "同じ話題同士は紐づけられません"
-        render("users/edit", status: :unprocessable_entity)
+        render("topics/edit", status: :unprocessable_entity)
       else # 紐づいていなくてかつ紐づきが5つ以下なら紐づけを行う
         connect_existing_topic1 = Connection.create(
           topic_id:         params[:id],
